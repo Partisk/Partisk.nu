@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block social %}
+    {% include "social.html" with title='Kontakt' description='Kontakta oss som driver Partisk.nu' image='images/logo.png' %}
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <h1>Vi gör politik lättare att förstå</h1>
+            <p>Med hjälp av visualiseringar hjälper vi till att visa vad partierna tycker i de viktigaste frågorna. </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h2>Vad tycker partierna?</h2>
+            <p>Vi har samlat en stor mängd frågor och svar som vi visar upp på ett sätt som är enkelt att förstå. </p>
+        </div>
+        <div class="col-6">
+            <h2>Vilket parti passar dig?</h2>
+            <p>Gör någon av våra quiz för att ta reda på vilket parti som passar dina åsikter bäst.</p>
+        </div>
+    </div>
+{% endblock %}

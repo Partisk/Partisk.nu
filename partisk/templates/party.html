@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block social %}
+    {% include "social.html" with title=title description=description image='images/logo.png' %}
+{% endblock %}
+{% block breadcrumbs %} {{block.super}}
+    <span class="divider">&gt;</span>
+    <a href="{% url 'parties' %}" class="breadcrumb">Partier</a>
+    <span class="divider">&gt;</span>
+    <span class="breadcrumb">{{party.name|capfirst}}</span>
+{% endblock %}
+{% block title %}{{party.name|capfirst}}{% endblock %}
+{% block content %}
+{% if user.party.edit and form %}
+<div class="row admin">
+    <form action="/admin/party/edit/{{party.id}}" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">Uppdatera parti</button>
+    </form>
+    <a href="/admin/party/delete/{{party.id}}">Delete</a>
+</div>
+{% endif %}
+
+    <div class="row">
+        <div class="col-12">
+            <h1><span class="party-logo party-logo-{{party.id}}"></span><span>{{party.name|capfirst}}</span></h1>
+        </div>
+    </div>
+    <div class="row">
+        <a href="{{party.website}}">{{party.website}}</a>
+        {% include "questions_table.html" with qpa=qpa %}
+    </div>
+{% endblock %}

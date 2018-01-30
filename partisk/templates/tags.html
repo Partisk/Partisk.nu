@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load compress %}
+{% block social %}
+    {% include "social.html" with title="Taggar" description="Taggar som hjälper dig hitta intressanta frågor" image='images/logo.png' %}
+{% endblock %}
+{% block breadcrumbs %}
+    {{block.super}}
+    <span class="divider">&gt;</span>
+    <span class="breadcrumb">Taggar</span>
+{% endblock %}
+{% block title %}Taggar{% endblock %}
+{% block content %}
+{% compress css inline %}
+<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/tags.css" media="screen,projection" />
+{% endcompress %}
+
+    <div id="tags">
+        <div class="row">
+            <div class="col-12">
+                <h1>Taggar</h1>
+            </div>
+        </div>
+        <div class="row">
+            {% for side in category_tags %}
+                <div class="col-6 category">
+                    {% for category in side %}
+                        <h2>{{category.letter}}</h2>
+                        <ul class="tags">
+                        {% for item in category.items %}
+                            <li><a href="{% url 'tag' item.tag.slug %}">{{item.tag.name}}</a></li>
+                        {% endfor %}
+                        </ul>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

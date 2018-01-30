@@ -1,0 +1,7 @@
+{% load compress %}
+{% compress css inline %}
+<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/qa-table.css" media="screen,projection" />
+{% endcompress %}
+
+<script type="text/javascript">var data={{data|safe}};</script>
+<div id="qa-table"></div>

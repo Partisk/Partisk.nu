@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block social %}
+    {% include "social.html" with title="Quiz" description="Quiz som hjälper dig förstå hur mycket du håller med olika partier" image='images/logo.png' %}
+{% endblock %}
+{% block breadcrumbs %}
+    {{block.super}}
+    <span class="divider">&gt;</span>
+    <span class="breadcrumb">Quiz</a>
+{% endblock %}
+{% block title %}Quiz{% endblock %}
+{% block content %}
+{% if user.quiz.add and form %}
+<div class="row admin">
+    <form action="/admin/quiz/add" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">Lägg till quiz</button>
+    </form>
+</div>
+{% endif %}
+
+    <div class="row">
+        <div class="col-12">
+            <h1>Quiz</h1>
+        </div>
+    </div>
+    {% for quiz in quizzes %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-content">
+                    <a href="{% url 'quiz' quiz.slug %}">{{quiz.name|capfirst}}</a>
+                    <p>{{quiz.description|capfirst}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

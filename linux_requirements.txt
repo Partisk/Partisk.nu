@@ -1,0 +1,3 @@
+apt install memcached supervisor
+
+npm install -g yuglify babel-cli

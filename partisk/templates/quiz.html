@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load compress %}
+{% block social %}
+    {% include "social.html" with title=title description=description image='images/logo.png' %}
+{% endblock %}
+{% block breadcrumbs %} {{block.super}}
+    <span class="divider">&gt;</span>
+    <a href="{% url 'quizzes' %}" class="breadcrumb">Quiz</a>
+    <span class="divider">&gt;</span>
+    <span class="breadcrumb">{{quiz.name|capfirst}}</span>
+{% endblock %}
+{% block title %}{{quiz.name|capfirst}}{% endblock %}
+{% block content %}
+<script>
+    var kommuner = {{kommuner|safe}};
+    var lan = {{lan|safe}};
+</script>
+{% if user.quiz.edit and form %}
+<div class="row admin">
+    <form action="/admin/quiz/edit/{{quiz.id}}" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">Uppdatera quiz</button>
+    </form>
+    <a href="/admin/quiz/delete/{{quiz.id}}">Delete</a>
+</div>
+{% endif %}
+
+<div class="row">
+        <div class="col-12">
+            <h1>{{quiz.name|capfirst}}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <form action="{% url 'save_quiz' %}" method="post">
+            {% csrf_token %}
+                <input type="hidden" name="quiz_id" value="{{quiz.id}}" />
+            {% for q in questions %}
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-content">
+                        <span>{{q.title|capfirst}}</span>
+                        <p>
+                            <input class="with-gap" name="{{q.id}}" id="{{q.id}}_0"  type="radio" value="0" checked />
+                            <label for="{{q.id}}_0">ingen åsikt</label>
+                        </p>
+                        <p>
+                            <input class="with-gap" name="{{q.id}}" id="{{q.id}}_1"  type="radio" value="1" />
+                            <label for="{{q.id}}_1">ja</label>
+                        </p>
+                        <p>
+                            <input class="with-gap" name="{{q.id}}" id="{{q.id}}_2"  type="radio" value="2"/>
+                            <label for="{{q.id}}_2">nej</label>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+    </div>
+{% endblock %}

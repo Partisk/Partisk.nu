@@ -1,0 +1,190 @@
+{% load compress %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-56993918-1"></script>
+    {% compress js inline %}
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-56993918-1');
+        </script>
+    {% endcompress %}
+    <style type="text/css">.party-logo,.party-logo-small{background: url('{% static 'images/partisk-sprite.png' %}')}</style>
+    {% compress css inline %}
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/simple-grid.min.css" media="screen,projection" />
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/style.css" media="screen,projection" />
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.min.css" />
+    {% endcompress %}
+
+    {% if "/admin/" in request.path %}
+        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/admin.css" media="screen,projection" />
+    {% endif %}
+
+
+    <title>{% block title %}Hem{% endblock %} - Partisk.nu</title>
+    <link rel="manifest" href="{{ STATIC_URL }}manifest.webmanifest">
+
+    {% block social %}{% endblock %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="row">
+                    <div class="col-4 logo">
+                        <a href="/"><i class="fa fa-check" aria-hidden="true"></i>partisk</a>
+                    </div>
+                    <div class="col-4 links">
+                        <ul id="menu">
+                            <li{% if "/frågor/" in request.path %} class="active"{% endif %}><a href='{% url 'questions' %}'>
+                                <i class="fa fa-thumbs-o-up"></i><b></b>Frågor</a>
+                            </li>
+                            <li{% if "/partier/" in request.path %}class="active" {% endif %}><a href='{% url 'parties' %}'>
+                                <i class="fa fa-globe"></i>Partier</a>
+                            </li>
+                            <li{% if "/quiz/" in request.path %} class="active"{% endif %}><a href='{% url 'quizzes' %}'>
+                                <i class="fa fa-check-square-o"></i>Quiz</a>
+                            </li>
+                            <li{% if "/taggar/" in request.path %} class="active"{% endif %}><a href='{% url 'tags' %}'>
+                                <i class="fa fa-tags"></i>Taggar</a>
+                            </li>
+                            <li{% if "/om/" in request.path %} class="active"{% endif %}><a href='{% url 'about' %}'>
+                                <i class="fa fa-envelope"></i>Om</a>
+                            </li>
+                            <li{% if "/kontakt/" in request.path %} class="active"{% endif %}><a href='{% url 'contact' %}'>
+                                <i class="fa fa-info-circle"></i>Kontakt</a>
+                            </li>
+                            {% if request.user.is_authenticated %}
+                            <li{% if "/admin/" in request.path %} class="active"{% endif %}><a href='{% url 'admin' %}'>
+                                <i class="fa fa-cogs" aria-hidden="true"></i>Admin</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="col-4">
+                        <div id="search">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                            <input id="autocomplete" type="text" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% if request.get_full_path != "/" %}
+    <nav id="breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">{% block breadcrumbs %}<a href="{% url 'index' %}" class="breadcrumb"><i class="fa fa-home" aria-hidden="true"></i></a>{% endblock %}</div>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+    <div class="main">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="container">
+            <div id="content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <h3>Navigering</h3>
+                    <ul id="menu">
+                        <li{% if "/frågor/" in request.path %} class="active"{% endif %}><a href='{% url 'questions' %}'>
+                            <i class="fa fa-thumbs-o-up"></i><b></b>Frågor</a>
+                        </li>
+                        <li{% if "/partier/" in request.path %}class="active" {% endif %}><a href='{% url 'parties' %}'>
+                            <i class="fa fa-globe"></i>Partier</a>
+                        </li>
+                        <li{% if "/quiz/" in request.path %} class="active"{% endif %}><a href='{% url 'quizzes' %}'>
+                            <i class="fa fa-check-square-o"></i>Quiz</a>
+                        </li>
+                        <li{% if "/taggar/" in request.path %} class="active"{% endif %}><a href='{% url 'tags' %}'>
+                            <i class="fa fa-tags"></i>Taggar</a>
+                        </li>
+                        <li{% if "/om/" in request.path %} class="active"{% endif %}><a href='{% url 'about' %}'>
+                            <i class="fa fa-envelope"></i>Om</a>
+                        </li>
+                        <li{% if "/kontakt/" in request.path %} class="active"{% endif %}><a href='{% url 'contact' %}'>
+                            <i class="fa fa-info-circle"></i>Kontakt</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-3">
+                    <h3>Hjälp till</h3>
+                    <ul>
+                        <li><a href=""><i class="fa fa-comments"></i> Skicka in feedback</a></li>
+                        <li><a href="mailto:info@partisk.nu"><i class="fa fa-envelope"></i> Berätta vad du tycker</a></li>
+                    </ul>
+                </div>
+                <div class="col-3">
+                    <h3>Kontakt</h3>
+                    <ul>
+                        <li>
+                            <p>
+                                <b>Allmänna frågor</b> <br>
+                                <a href="mailto:info@partisk.nu">info@partisk.nu</a>
+                            </p>
+                        </li>
+                        <li>
+                            <p><b>Media</b> <br>
+                                <a href="mailto:media@partisk.nu">media@partisk.nu</a>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-3">
+                    <h3>Följ oss</h3>
+                    <ul>
+                        <a href="https://www.facebook.com/partisk.nu" title="Facebook"><i class="fa fa-facebook-square"></i></a>
+                        <a href="https://twitter.com/partisknu" title="Twitter"><i class="fa fa-twitter-square"></i></a>
+                        <a href="https://plus.google.com/108714344898230265138" rel="publisher" title="Google+"><i class="fa fa-google-plus-square"></i></a>
+                        <a href="http://www.linkedin.com/company/5005133" title="LinkedIn"><i class="fa fa-linkedin-square"></i></a>
+                        <a href="https://github.com/rasmushaglund/Partisk" title="GitHub"><i class="fa fa-github"></i></a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                <p>© 2013-2017 Partisk.nu är skapad med <i class="fa fa-heart" aria-hidden="true"></i></p>
+            </div>
+        </div>
+
+    </footer>
+    {% compress js inline %}
+        <script type="text/javascript" src="{{ STATIC_URL }}js/fontfaceobserver.standalone.js" defer></script>
+    {% endcompress %}
+    {% compress js file partisk %}
+        <script defer>
+            var serviceUrl = '{% url 'search' %}';
+            var questionsUrl = '{% url 'questions' %}';
+            var answersUrl = '{% url 'answers' %}';
+            var tagsUrl = '{% url 'tags' %}';
+            var partiesUrl = '{% url 'parties' %}';
+            var quizzesUrl = '{% url 'quizzes' %}';
+        </script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/auto-complete.js" defer></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/main.js" defer></script>
+    {% endcompress %}
+</body>
+</html>

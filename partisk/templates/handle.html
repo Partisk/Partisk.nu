@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="handle">
+    <div class="row">
+        <div class="col-12">
+            <h1>Handle {{stuff.title}}</h1>
+            {{ stuff.date }}<br/>
+            <a href="{{ stuff.url }}">{{stuff.url}}</a>
+            <ul>
+                {% for party in stuff.parties.all %}
+                    <li>{{party.name}}</li>
+                {% endfor %}
+            </ul>
+            <div class="row">
+                <div class="col-6">
+                        {{ stuff.content|safe }}
+                </div>
+                <div class="col-6">
+                {% if stuff.source_type.name == "twitter" %}
+                    <div id="tweet" tweetID="{{tweetId}}"></div>
+                    <script sync src="https://platform.twitter.com/widgets.js"></script>
+                    <script>
+                        window.onload = (function(){
+
+                        var tweet = document.getElementById("tweet");
+                        var id = tweet.getAttribute("tweetID");
+
+                        twttr.widgets.createTweet(
+                            id, tweet,
+                            {
+                            conversation : 'none',    // or all
+                            cards        : 'hidden',  // or visible
+                            linkColor    : '#cc0000', // default is blue
+                            theme        : 'light'    // or dark
+                            })
+                        });
+                    </script>
+                {% else %}
+                    <iframe id="web-iframe" src="{{stuff.url}}" frameborder="0"></iframe>
+                {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <a href="">Handle</a>
+                    <a href="">Remove</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

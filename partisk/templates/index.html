@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block social %}
+    {% include "social.html" with title='Hem' description='Vi gör politik lättare att förstå' image='images/logo.png' %}
+{% endblock %}
+{% block title %}Vi gör politik lättare att förstå{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <h1>Vi gör politik lättare att förstå</h1>
+            <p>Med hjälp av enkla tabeller visar vi dig vad partierna tycker i de viktigaste frågorna.
+            Vi har sammanställt <a href="{% url 'questions' %}">frågor och svar</a> så att du inte behöver göra det och för att få en
+            bra översikt över partiernas åsikter har vi olika <a href='{% url 'quizzes' %}'>quiz</a> som hjälper dig få en bättre bild.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h2><i class="fa fa-thumbs-o-up"></i> Vad tycker partierna?</h2>
+            <p>Vi har samlat en stor mängd <a href="{% url 'questions' %}">frågor och svar</a> som vi visar upp på ett sätt som är enkelt att förstå. </p>
+        </div>
+        <div class="col-6">
+            <h2><i class="fa fa-check-square-o"></i> Vilket parti ska jag rösta på?</h2>
+            <p>Gör <a href='{% url 'quizzes' %}'>någon av våra quiz</a> för att ta reda på vilket parti som passar dina åsikter bäst.</p>
+        </div>
+    </div>
+{% endblock %}

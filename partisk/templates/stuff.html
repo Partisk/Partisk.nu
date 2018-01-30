@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <h1>Stuff</h1>
+            {{ stuff.count }} entries
+            <ul>
+                {% for s in stuff %}
+                <li><a href="{% url 'handle' s.id %}">
+                    {{ s.date }} -
+                    {% for p in s.parties.all %}
+                        {{ p.name }}
+                    {% endfor %}
+                    -  {{ s.source_type.name }}
+                    {% if s.source_type.name == 'website' %}
+                          - {{ s.title }}
+                    {% endif %}
+                    {% if s.source_type.name == 'twitter' %}
+                        - {{ s.source_type.name }}
+                    {% endif %}
+                </a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

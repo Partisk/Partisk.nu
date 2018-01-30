@@ -1,0 +1,86 @@
+# nginx.conf
+
+        gzip on;
+        gzip_disable "msie6";
+
+        gzip_vary on;
+        gzip_proxied any;
+        gzip_comp_level 6;
+        gzip_buffers 16 8k;
+        gzip_http_version 1.1;
+        gzip_min_length 256;
+        gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript application/woff2 application/woff application/svg application/vnd.ms-fontobject application/x-font-otf application/x-font-ttf$
+
+
+#nginx mime
+    application/font-woff                 woff;
+    application/font-woff2              woff2;
+application/vnd.ms-fontobject    eot;
+application/x-font-ttf           ttc ttf;
+application/x-font-otf           otf;
+
+
+
+# static.partisk.nu
+server {
+    root /var/www/partisk.nu/static;
+server_name test-static.partisk.nu;
+    location ~* \.(jpg|jpeg|gif|png|css|js|ico|xml|woff|woff2|ttf|svg|eot|otf).* {
+         access_log        off;
+         log_not_found     off;
+         expires           1y;
+
+        add_header Cache-Control "public";
+
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Methods' 'GET';
+
+        add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range';
+        add_header 'Access-Control-Expose-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range';
+     }
+}
+
+
+
+# test.partisk.nu
+upstream partisk_server {
+  server unix:/var/www/partisk.nu/test/partisk.sock fail_timeout=0;
+}
+
+
+server {
+        listen 80;
+       root /var/www/partisk.nu/test/;
+
+       access_log  /var/log/nginxtest.partisk.nu.access.log;
+       error_log  /var/log/nginx/test.partisk.nu.error.log;
+
+       server_name test.partisk.nu;
+
+       rewrite ^/static/css/partisk\-v.*\.css$ /static/css/partisk.min.css;
+       rewrite ^/static/js/partisk\-v.*\.js$ /static/js/partisk.min.js;
+       rewrite ^/static/img/partisk\-sprite\-v.*\.png$ /static/img/partisk-sprite.png;
+
+       location ~* \.(?:ico|css|js|png|woff)$ {
+                expires 1y;
+                add_header Pragma public;
+                add_header Vary "Accept-Encoding";
+                add_header Cache-Control "public";
+       }
+
+  #     location / {
+ #              include proxy_params;
+#               proxy_pass http://unix:/var/www/partisk.nu/test/partisk.sock;
+     #  }
+
+location / {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        if (!-f $request_filename) {
+            proxy_pass http://partisk_server;
+            break;
+        }
+    }
+}
+

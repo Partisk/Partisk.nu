@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block social %}
+    {% include "social.html" with title=title description=description image='images/logo.png' %}
+{% endblock %}
+{% block breadcrumbs %} {{block.super}}
+    <span class="divider">&gt;</span>
+    <a href="{% url 'tags' %}" class="breadcrumb">Taggar</a>
+    <span class="divider">&gt;</span>
+    <span class="breadcrumb">{{tag.name|capfirst}}</span>
+{% endblock %}
+{% block title %}{{tag.name|capfirst}}{% endblock %}
+{% block content %}
+{% if user.tag.edit and form %}
+<div class="row admin">
+    <form action="/admin/tag/edit/{{tag.id}}" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">Uppdatera tagg</button>
+    </form>
+    <a href="/admin/tag/delete/{{tag.id}}">Delete</a>
+</div>
+{% endif %}
+    <div class="row">
+        <div class="col-12">
+            <h1>{{tag.name|capfirst}}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {% include "questions_table.html" with qpa=qpa %}
+        </div>
+    </div>
+{% endblock %}

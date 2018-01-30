@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block social %}
+    {% include "social.html" with title=title description=description image='images/logo.png' %}
+{% endblock %}
+{% block breadcrumbs %} {{block.super}}
+    <span class="divider">&gt;</span>
+    <a href="{% url 'questions' %}" class="breadcrumb">Questions</a>
+    <span class="divider">&gt;</span>
+    <span class="breadcrumb">{{question.title|capfirst}}</span>
+{% endblock %}
+{% block title %}{{question.title|capfirst}}{% endblock %}
+{% block content %}
+{% if user.question.edit and question_form and answer_form %}
+<div class="row admin">
+    <form action="/admin/question/edit/{{question.id}}" method="POST">
+        {% csrf_token %}
+        {{question_form}}
+        <input type="text" value="{{tags_string}}" name="tags" />
+        <button type="submit">Uppdatera fråga</button>
+    </form>
+    <form action="/admin/answer/add/{{question.id}}" method="POST">
+        {% csrf_token %}
+        {{answer_form}}
+        <input type="hidden" value="{{question.id}}" name="question" />
+        <button type="submit">Lägg till svar</button>
+    </form>
+    <a href="/admin/question/delete/{{question.id}}">Delete</a>
+</div>
+{% endif %}
+<div class="row">
+      <div class="col-12">
+          <h1>{{question.title}}</h1>
+      </div>
+  </div>
+  <div class="row">
+
+    <div class="col-12">
+      {{question.description}}
+
+      <ul class="tag-list">
+        {% for t in tags %}
+        <li><a href="{% url 'tag' t.slug %}">{{t.name|lower}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      {% include "questions_table.html" with qpa=qpa %}
+    </div>
+  </div>
+{% endblock %}

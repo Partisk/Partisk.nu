@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load compress %}
+{% block social %}
+    {% include "social.html" with title="Frågor" description="Frågor och svar för Sveriges största partier" image='images/logo.png' %}
+{% endblock %}
+{% block breadcrumbs %}
+    {{block.super}}
+    <span class="divider">&gt;</span>
+    <span class="breadcrumb">Frågor</span>
+{% endblock %}
+{% block title %}Frågor{% endblock %}
+{% block content %}
+{% compress css inline %}
+<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/questions.css" media="screen,projection" />
+{% endcompress %}
+{% if user.question.add and form %}
+    <div class="row admin">
+        <form action="/admin/question/add" method="POST">
+            {% csrf_token %}
+            {{form}}
+            <input type="text" name="tags" />
+            <button type="submit">Lägg till fråga</button>
+        </form>
+    </div>
+{% endif %}
+    <div class="row">
+        <div class="col-12">
+                {% include "questions_table.html" with qpa=qpa %}
+        </div>
+    </div>
+{% endblock %}

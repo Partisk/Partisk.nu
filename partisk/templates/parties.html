@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load compress %}
+{% block social %}
+    {% include "social.html" with title="Partier" description="Information om Sveriges största partier" image='images/logo.png' %}
+{% endblock %}
+{% block breadcrumbs %}
+    {{block.super}}
+    <span class="divider">&gt;</span>
+    <span class="breadcrumb">Partier</span>
+{% endblock %}
+{% block title %}Partier{% endblock %}
+{% block content %}
+{% compress css inline %}
+<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/parties.css" media="screen,projection" />
+{% endcompress %}
+{% if user.party.add and form %}
+<div class="row admin">
+    <form action="/admin/party/add" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">Lägg till parti</button>
+    </form>
+</div>
+{% endif %}
+
+    <div class="row">
+        <div class="col-12">
+            <h1>Partier</h1>
+        </div>
+    </div>
+    <div class="parties-list row">
+        <div class="col-6 parties">
+            {% for party in official.left %}
+            <div class="party">
+                <h2><span class="party-logo party-logo-{{party.id}}"></span><a href="{% url 'party' party.slug %}">{{party.name|capfirst}}</a></h2>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-6 parties">
+            {% for party in official.right %}
+            <div class="party">
+                <h2><span class="party-logo party-logo-{{party.id}}"></span><a href="{% url 'party' party.slug %}">{{party.name|capfirst}}</a></h2>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="parties-list other row">
+        <div class="col-6 parties">
+                {% for party in other.left %}
+                <div class="party">
+                    <h2><span class="party-logo party-logo-{{party.id}}"></span><a href="{% url 'party' party.slug %}">{{party.name|capfirst}}</a></h2>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

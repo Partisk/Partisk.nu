@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block social %}
+    {% include "social.html" with title=title description=description image='images/logo.png' %}
+{% endblock %}
+{% block breadcrumbs %} {{block.super}}
+    <span class="divider">&gt;</span>
+    <span class="breadcrumb">Svar</span>
+    <span class="divider">&gt;</span>
+    <a href="{% url 'question' question.slug %}" class="breadcrumb">{{ question.title|capfirst }}</a>
+    <span class="divider">&gt;</span>
+    <a href="{% url 'party' answer.party.slug %}" class="breadcrumb">{{ answer.party.name|capfirst }}</a>
+    <span class="divider">&gt;</span>
+    <span class="breadcrumb">{{ answer.answer_type.answer|capfirst }}</span>
+{% endblock %}
+{% block title %}{{ description }}{% endblock %}
+{% block content %}
+{% if user.answer.edit and form %}
+<div class="row admin">
+    <form action="/admin/answer/edit/{{answer.id}}" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">Uppdatera fråga</button>
+    </form>
+    <a href="/admin/answer/delete/{{answer.id}}">Delete</a>
+</div>
+{% endif %}
+    <div class="row">
+        <div class="col-12">
+            <h1 class="{% if answer.deleted %}deleted{% endif %}">
+                {{ description }}
+            </h1>
+            {{ answer.description }}
+            <a href='{{ answer.source }}'>Källa</a>
+        </div>
+    </div>
+ {% endblock %}
