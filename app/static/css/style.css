@@ -145,6 +145,27 @@ nav li {
     color: #454a57;
 }
 
+#CookielawBanner p {
+    color: #abb2c3;
+}
+
+#CookielawBanner .col-12 {
+    display: flex;
+    align-items: center;
+}
+
+#CookielawBanner i {
+    font-size: 30px;
+    padding-right: 10px;
+}
+
+#CookielawBanner .btn {
+    padding: 3px;
+    font-size: 13px;
+    border: 1px solid #aaa;
+    background-color: #abb2c3;
+}
+
 #breadcrumbs {
     background-color: #454a57;
 }

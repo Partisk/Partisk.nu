@@ -6,3 +6,4 @@ django_compressor===2.2
 maxminddb-geolite2===2017.803
 twitterscraper===0.4
 bleach===2.1.2
+django-cookie-law===1.0.13

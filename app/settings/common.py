@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "pipeline",
     "compressor",
+    "cookielaw",
 ]
 
 MIDDLEWARE = [

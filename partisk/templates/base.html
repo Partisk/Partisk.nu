@@ -1,5 +1,6 @@
 {% load compress %}
 {% load static %}
+{% load cookielaw_tags %}
 <!DOCTYPE html>
 <html>
 
@@ -36,6 +37,7 @@
 </head>
 
 <body>
+    {% cookielaw_banner %}
     <nav>
         <div class="container">
             <div class="nav-wrapper">
@@ -186,6 +188,7 @@
         </script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/auto-complete.js" defer></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/main.js" defer></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/cookielaw.js" defer></script>
     {% endcompress %}
 </body>
 </html>
