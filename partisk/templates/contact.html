@@ -1,22 +1,30 @@
 {% extends "base.html" %}
 {% block social %}
-    {% include "social.html" with title='Kontakt' description='Kontakta oss som driver Partisk.nu' image='images/logo.png' %}
+    {% include "social.html" with title='Kontakt' description='Kontakta oss' image='images/logo.png' %}
 {% endblock %}
+{% block breadcrumbs %}
+    {{block.super}}
+    <span class="divider">&gt;</span>
+    <span class="breadcrumb">Kontakt</span>
+{% endblock %}
+{% block title %}Kontakt{% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-12">
-            <h1>Vi gör politik lättare att förstå</h1>
-            <p>Med hjälp av visualiseringar hjälper vi till att visa vad partierna tycker i de viktigaste frågorna. </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <h2>Vad tycker partierna?</h2>
-            <p>Vi har samlat en stor mängd frågor och svar som vi visar upp på ett sätt som är enkelt att förstå. </p>
-        </div>
-        <div class="col-6">
-            <h2>Vilket parti passar dig?</h2>
-            <p>Gör någon av våra quiz för att ta reda på vilket parti som passar dina åsikter bäst.</p>
+            <h1>Kontakt</h1>
+                    <p>För allmänna frågor om tjänsten maila <a href="mailto:info@partisk.nu">info@partisk.nu</a> alternativt kontakta oss via sociala medier på
+                    <a href="https://www.facebook.com/partisk.nu" title="Facebook">Facebook</a>, 
+                    <a href="http://www.linkedin.com/company/5005133" title="LinkedIn">LinkedIn</a>, 
+                    <a href="https://twitter.com/partisknu" title="Twitter">Twitter</a> eller  
+                    <a href="https://plus.google.com/108714344898230265138" rel="publisher" title="Google+">Google+</a>.</p>
+
+                    <p>Frågor om samarbeten, kontakt med media eller liknande maila <a href="mailto:media@partisk.nu">media@partisk.nu</a>.</p>
+                    
+                    <p>Vid frågor angående utvecklingen av tjänsten, buggrapportering eller förbättringsförslag går det bra att maila, nå ut till oss via 
+                    <a href="https://github.com/rasmushaglund/Partisk" title="GitHub">Github</a> eller gå med i vår 
+                    <a href="https://partisk.slack.com" title="Slack">Slack</a> (maila <a href="mailto:info@partisk.nu">info@partisk.nu</a> för att få en inbjudan).
+                    </p>
+
         </div>
     </div>
 {% endblock %}
