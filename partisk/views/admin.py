@@ -27,7 +27,7 @@ def stuff(request):
         'stuff': stuff[:50],
         'total': stuff.count(),
     }
-    return render(request, 'stuff.html', context)
+    return render(request, 'admin/stuff.html', context)
 
 
 def admin_index(request):
