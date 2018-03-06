@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-12">
             <h1>Stuff</h1>
-            {{ stuff.count }} entries
+            {{ stuff.count }} of {{ total }} entries
             <ul>
                 {% for s in stuff %}
                 <li><a href="{% url 'handle' s.id %}">

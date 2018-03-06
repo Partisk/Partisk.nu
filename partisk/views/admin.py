@@ -22,8 +22,10 @@ def handle(request, stuff_id):
 
 
 def stuff(request):
+    stuff = Stuff.objects.all().order_by('-date', 'id')
     context = {
-        'stuff': Stuff.objects.all().order_by('date', 'id')
+        'stuff': stuff[:50],
+        'total': stuff.count(),
     }
     return render(request, 'stuff.html', context)
 
