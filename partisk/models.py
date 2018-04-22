@@ -28,7 +28,7 @@ class Answer(models.Model):
     party = models.ForeignKey('Party', on_delete=models.SET_NULL, null=True)
     answer_type = models.ForeignKey('AnswerType', related_name="+", on_delete=models.SET_NULL, null=True)
     question = models.ForeignKey('Question', on_delete=models.SET_NULL, null=True)
-    source = models.TextField()
+    source = models.TextField(default=None, null=True)
     date = models.DateTimeField()
     created_by = models.IntegerField(default=None, null=True)
     deleted = models.BooleanField(default=False)
@@ -37,7 +37,8 @@ class Answer(models.Model):
     description = models.TextField(blank=True, null=True)
     approved = models.BooleanField(default=False)
     created_by = models.IntegerField(default=None, null=True)
-
+    stuff = models.ForeignKey('Stuff', on_delete=models.SET_NULL, null=True, blank=True)
+    
     class Meta:
         db_table = 'answers'
 
@@ -129,6 +130,7 @@ class Question(models.Model):
 
     class Meta:
         db_table = 'questions'
+        ordering = ['title']
 
     def __str__(self):
         return self.title
@@ -281,7 +283,6 @@ class Stuff(models.Model):
     content = models.TextField(null=True)
     parties = models.ManyToManyField('Party', blank=True)
     content_hash = models.CharField(max_length=32, blank=True, null=True)
-    questions = models.ManyToManyField('Question', blank=True)
     tags = models.ManyToManyField('Tag', blank=True)
     date = models.DateTimeField(blank=True, null=True)
     handled = models.BooleanField(default=False)
@@ -290,4 +291,4 @@ class Stuff(models.Model):
         db_table = 'stuff'
 
     def __str__(self):
-        return self.title
+        return str(self.id) + " " + self.title

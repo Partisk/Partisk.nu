@@ -1,0 +1,120 @@
+{% load compress %}
+{% load static %}
+<html>
+    <head>
+            {% compress js inline %}
+            <script type="text/javascript" src="{{ STATIC_URL }}js/Chart.min.js"></script>
+            {% endcompress %}
+        </head>
+    <body>
+        <div class="graph">
+            <canvas id="myChart" width="400" height="400"></canvas>
+            <div class="parties">
+                {% for p in parties %}
+                    <div class="party-logo-small party-logo-small-{{p.id}}"></div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <script>
+            var results = {{ data|safe }};
+            var parties = {{ parties_json|safe }};
+        
+            var labels = [];
+            var colors = [];
+            var data = [];
+        
+            for (i in results) {
+                var result = results[i];
+                var party = parties[i];
+                colors.push(party.color);
+                labels.push(party.name);
+                data.push(Math.round(result.correct/(result.incorrect+result.correct)*100));
+            }
+
+            var shadowed = {
+                beforeDatasetsDraw: function(chart, options) {
+                chart.ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+                chart.ctx.shadowBlur = 20;
+                ctx.shadowOffsetX = 10;
+                ctx.shadowOffsetY = 5;
+              },
+              afterDatasetsDraw: function(chart, options) {
+                  chart.ctx.shadowColor = 'rgba(0, 0, 0, 0)';
+                chart.ctx.shadowBlur = 0;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+              }
+            };
+                    
+            var ctx = document.getElementById("myChart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '% håller med',
+                        data: data,
+                        backgroundColor: colors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true,
+                                callback: function(value, index, values) {
+                                    return value + '%';
+                                }
+                            }
+                        }]
+                    },
+                    legendCallback: function(chart) {
+                        return '<p>hej</p>';
+                    },
+                    title: {
+                        display: true,
+                        text: 'Resultat'
+                    },
+                    animation: false,
+                },
+                plugins: [shadowed]
+            });
+        
+            Chart.plugins.register({
+                afterDatasetsDraw: function(chart, easing) {
+                    // To only draw at the end of animation, check for easing === 1
+                    var ctx = chart.ctx;
+        
+                    chart.data.datasets.forEach(function (dataset, i) {
+                        var meta = chart.getDatasetMeta(i);
+                        if (!meta.hidden) {
+                            meta.data.forEach(function(element, index) {
+                                // Draw the text in black, with the specified font
+                                ctx.fillStyle = 'rgb(0, 0, 0)';
+        
+                                var fontSize = 16;
+                                var fontStyle = 'normal';
+                                var fontFamily = 'Helvetica Neue';
+                                ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+        
+                                // Just naively convert to string for now
+                                var dataString = dataset.data[index].toString() + '%';
+        
+                                // Make sure alignment settings are correct
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+        
+                                var padding = 5;
+                                var position = element.tooltipPosition();
+                                ctx.fillText(dataString, position.x, position.y - (fontSize / 2) - padding);
+                            });
+                        }
+                    });
+
+                }
+            });
+        </script>
+    </body>
+</html>

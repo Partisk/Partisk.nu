@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import cache_page
@@ -14,23 +15,37 @@ VIEW_CACHE_TIME = settings.VIEW_CACHE_TIME
 
 @permission_required('partisk.add_answer')
 @csrf_protect
-def add_answer(request, question_id):
-    question_params = get_questions_params({
-        'id': question_id
-    })
-    question = get_object_or_404(Question, **question_params)
+def add_question_answer(request, question_id):
+    print('lalal')
+    print(question_id)
+    question = get_object_or_404(Question, id=question_id)
     party = get_object_or_404(Party, id=request.POST['party'])
     answer_type = get_object_or_404(AnswerType, id=request.POST['answer_type'])
     answer_form = AnswerSaveModelForm(request.POST)
 
-    answer_form.save()
+    if answer_form.is_valid():
+        answer_form.save()
 
-    messages.success(request, '%ss answer "%s" added for %s' %
-                              (party.name,
-                               answer_type.answer,
-                               question.title))
+        messages.success(request, '%ss answer "%s" added for %s' %
+                                (party.name,
+                                answer_type.answer,
+                                question.title))
+    else:
+        messages.error(request, 'Validation error: %s' %
+                                (answer_form.errors))
 
     return redirect('question', question_title=question.slug)
+
+
+@permission_required('partisk.add_answer')
+@csrf_protect
+def add_answer(request):
+    print(request.POST)
+    print(request.POST['question'])
+    print('lols')
+    add_question_answer(request, int(request.POST['question']))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 
 @permission_required('partisk.edit_answer')
@@ -60,7 +75,7 @@ def delete_answer(request, answer_id):
 
     messages.success(request, 'Answer deleted')
 
-    return redirect('question', question_title=question.slug)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @cache_page(VIEW_CACHE_TIME)

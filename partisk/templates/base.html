@@ -82,7 +82,7 @@
             </div>
         </div>
     </nav>
-    {% if request.get_full_path != "/" %}
+    {% if request.get_full_path != "/" and "/admin/" not in request.path %}
     <nav id="breadcrumbs">
         <div class="container">
             <div class="row">

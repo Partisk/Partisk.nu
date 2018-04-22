@@ -2,6 +2,7 @@ import json
 from django.contrib.auth.decorators import permission_required
 from django.contrib import messages
 from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django.conf import settings
 from django.views.decorators.cache import cache_page
 from django.shortcuts import render, get_object_or_404, redirect
@@ -52,7 +53,7 @@ def add_question(request):
 
     messages.success(request, 'Question "%s" added' % request.POST['title'])
 
-    return redirect(reverse('questions'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @permission_required('partisk.edit_question')

@@ -4,9 +4,18 @@ from django.http import HttpResponse
 from django.views.decorators.cache import cache_page
 from django.shortcuts import render
 from django.template.defaulttags import register
-from partisk.models import Question, Tag, Quiz, Party
+from partisk.models import Question, Tag, Quiz, Party, QuizAnswer, QuizResults
 from partisk.utils import get_questions_params, get_quizzes_params, \
                           get_parties_params, get_tags_params
+from django.shortcuts import get_object_or_404
+
+from partisk.utils import get_qpa_table_data, get_user, \
+                          get_questions_for_answers, \
+                          get_answers_for_questions, \
+                          get_qpa_table_data_with_quiz_results, \
+                          get_questions_for_quiz, get_answers_params, \
+                          get_quizzes_params, get_parties_params, get_lans_json, \
+                          get_kommuner_json
 
 VIEW_CACHE_TIME = settings.VIEW_CACHE_TIME
 
@@ -45,6 +54,49 @@ def contact(request):
 
 def about(request):
     return render(request, 'about.html')
+
+
+def test(request):
+    quiz_result_id = "ba169d29b3504d47b4cbdeb69ff41a5b"
+    result = get_object_or_404(QuizResults, id=quiz_result_id)
+    quiz = get_object_or_404(Quiz, id=result.quiz_id)
+    party_params = get_parties_params()
+    parties = Party.objects.filter(**party_params)
+    created = result.created
+    qa = {}
+
+    if request.session.get('quiz_results_id', False):
+        quiz_results_id = request.session['quiz_results_id']
+        party_params = get_parties_params()
+        parties_data = Party.objects.filter(**party_params) \
+                            .order_by('-last_result_parliment')
+        quiz_answers_data = QuizAnswer.objects.filter(
+            quiz_results_info__id=quiz_results_id)
+        questions_data = get_questions_for_answers(quiz_answers_data)
+        answers_data = get_answers_for_questions(questions_data)
+        qa = get_qpa_table_data_with_quiz_results(questions_data, answers_data,
+                                                  parties_data,
+                                                  quiz_answers_data)
+
+    parties_json = {}
+    for party in parties:
+        parties_json[party.id] = {
+            'name': party.name,
+            'color': party.color
+        }
+
+    return render(request, "test.html", {
+        'result': json.loads(result.data),
+        'data': result.data,
+        'parties_json': json.dumps(parties_json),
+        'parties': parties,
+        'quiz': quiz,
+        'quiz_result_id': quiz_result_id,
+        'created': created,
+        'description': 'Resultat för ' + quiz.name,
+        'title': 'Resultat för ' + quiz.name,
+        'image': request.build_absolute_uri() + 'img.jpg',
+        'qa': qa})
 
 
 @cache_page(VIEW_CACHE_TIME)

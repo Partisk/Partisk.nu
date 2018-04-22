@@ -8,13 +8,14 @@ from partisk.views import parties, add_party, delete_party, edit_party, party
 from partisk.views import tags, add_tag, delete_tag, edit_tag, tag
 from partisk.views import quizzes, add_quiz, delete_quiz, edit_quiz, \
                           save_quiz_results, quiz_results, quiz
-from partisk.views import answer, add_answer, delete_answer, edit_answer
-from partisk.views import stuff, admin_index, handle
+from partisk.views import answer, add_answer, add_question_answer, delete_answer, edit_answer
+from partisk.views import stuff, admin_index, StuffDetail, handle, stuff_done
 from partisk.views import search
 from partisk.views import contact
 from partisk.views import about
 from partisk.views import graph_image
 from partisk.views import login, logout
+from partisk.views import test
 
 urlpatterns = [
     url(r'^$', index, name='index'),
@@ -39,6 +40,7 @@ urlpatterns = [
     url(r'^sök/$', search, name='search'),
     url(r'^kontakt/$', contact, name='contact'),
     url(r'^om/$', about, name='about'),
+    url(r'^test/$', test, name='test'),
     url(r'^login/$', login, name='login'),
     url(r'^logout/$', logout, name='logout'),
 ]
@@ -63,7 +65,9 @@ if settings.ADMIN_ENABLED:
         url(r'^admin/tag/delete/(?P<tag_id>.+)$', delete_tag,
             name='delete_tag'),
         url(r'^admin/tag/edit/(?P<tag_id>.+)$', edit_tag, name='edit_tag'),
-        url(r'^admin/answer/add/(?P<question_id>.+)$', add_answer,
+        url(r'^admin/answer/add/(?P<question_id>.+)$', add_question_answer,
+            name='add_question_answer'),
+        url(r'^admin/answer/add/$', add_answer,
             name='add_answer'),
         url(r'^admin/answer/delete/(?P<answer_id>.+)$', delete_answer,
             name='add_answer'),
@@ -71,6 +75,8 @@ if settings.ADMIN_ENABLED:
             name='edit_answer'),
         url(r'^admin/$', admin_index, name='admin'),
         url(r'^admin/stuff/$', stuff, name='stuff'),
-        url(r'^admin/handle/(?P<stuff_id>.+)$', handle, name='handle'),
+        url(r'^admin/stuff/(?P<stuff_id>.+)/done$', stuff_done, name='stuff_done'),
+        url(r'^admin/handle/$', handle, name='handle'),
+        url(r'^admin/handle/(?P<pk>.+)/$', StuffDetail.as_view(), name='stuff_detail'),
         url(r'^django-admin/', admin.site.urls, name='admin'),
     ]
