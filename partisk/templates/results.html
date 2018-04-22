@@ -23,14 +23,21 @@
 </table>
 
 <div class="graph">
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <canvas id="MainPartiesChart" width="400" height="400"></canvas>
     <div class="parties">
-        {% for p in parties %}
+        {% for p in main_parties %}
             <div class="party-logo-small party-logo-small-{{p.id}}"></div>
         {% endfor %}
     </div>
 </div>
-
+<div class="graph">
+    <canvas id="OtherPartiesChart" width="400" height="400"></canvas>
+    <div class="parties">
+        {% for p in other_parties %}
+            <div class="party-logo-small party-logo-small-{{p.id}}"></div>
+        {% endfor %}
+    </div>
+</div>
 
 {% if qa %}
     {% for k, q in qa.questions.items %}
@@ -53,31 +60,30 @@
     var results = {{ data|safe }};
     var parties = {{ parties_json|safe }};
 
-    var labels = [];
-    var colors = [];
-    var data = [];
+
+    var mainLabels = [];
+    var otherLabels = [];
+    var mainColors = [];
+    var otherColors = [];
+    var mainData = [];
+    var otherData = []
 
     for (i in results) {
         var result = results[i];
         var party = parties[i];
-        colors.push(party.color);
-        labels.push(party.name);
-        data.push(Math.round(result.correct/(result.incorrect+result.correct)*100));
+        if(party.main){
+            mainColors.push(party.color);
+            mainLabels.push(party.name);
+            mainData.push(Math.round(result.correct/(result.incorrect+result.correct)*100));
+        }
+        else{
+            otherColors.push(party.color);
+            otherLabels.push(party.name);
+            otherData.push(Math.round(result.correct/(result.incorrect+result.correct)*100));
+        }
     }
 
-    var ctx = document.getElementById("myChart").getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: '% håller med',
-                data: data,
-                backgroundColor: colors,
-                borderWidth: 1
-            }]
-        },
-        options: {
+    var chartOptions = {
             scales: {
                 yAxes: [{
                     ticks: {
@@ -85,6 +91,13 @@
                         callback: function(value, index, values) {
                             return value + '%';
                         }
+                    }
+                }],
+                xAxes:[{
+                    ticks:{
+                        autoSkip:false,
+                        minRotation:40,
+                        maxRotation:90
                     }
                 }]
             },
@@ -96,6 +109,35 @@
                 text: 'Text'
             }
         }
+    var mainCtx = document.getElementById("MainPartiesChart").getContext('2d');
+    var otherCtx = document.getElementById("OtherPartiesChart").getContext('2d');
+
+    
+    var mainChart = new Chart(mainCtx, {
+        type: 'bar',
+        data: {
+            labels: mainLabels,
+            datasets: [{
+                label: '% håller med',
+                data: mainData,
+                backgroundColor: mainColors,
+                borderWidth: 1
+            }]
+        },
+        options: chartOptions
+    });
+    var otherChart = new Chart(otherCtx, {
+        type: 'bar',
+        data: {
+            labels: otherLabels,
+            datasets: [{
+                label: '% håller med',
+                data: otherData,
+                backgroundColor: otherColors,
+                borderWidth: 1
+            }]
+        },
+        options: chartOptions
     });
 
     Chart.plugins.register({
