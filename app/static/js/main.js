@@ -17,6 +17,74 @@ var splitText = function (text, term) {
     }
 }
 
+var partiesSettingsHash;
+
+var showParty = function (party) {
+    if (partiesSettingsHash === undefined) {
+        return party.x;
+    } else {
+        return partiesSettingsHash[party.i];
+    }
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function updateCookie(cname, value) {
+    var myDate = new Date();
+    myDate.setMonth(myDate.getMonth() + 12);
+
+    document.cookie = cname + '=' + value + ';expires=' + myDate + ';';
+    console.log(cname + '=' + value + ';');
+}
+
+var loadSettings = function () {
+    var settingsCookie = getCookie('settings');
+
+    if (settingsCookie) {
+        var settings = settingsCookie.split(',');
+    
+        partiesSettingsHash = {};
+        for (var i = 0; i < settings.length; i++) {
+            partiesSettingsHash[settings[i]] = true;
+        }
+    
+        console.log(partiesSettingsHash);
+    }
+}
+
+var updateSettings = function () {
+    var newSettings = [];
+
+    var inputs = document.querySelectorAll('#qa-table .settings input')
+
+    for (var i = 0; i < inputs.length; i++) {
+        var name = inputs[i].name;
+        var checked = inputs[i].checked;
+
+        if (checked) {
+            newSettings.push(name);
+        }
+    }
+
+    console.log(newSettings);
+
+    updateCookie('settings', newSettings.join(','));
+}
+
 // Onload
 document.addEventListener("DOMContentLoaded", function(event) {
     var mainFont = new FontFaceObserver('Lato', {
@@ -101,21 +169,23 @@ var drawQuestion = function (question) {
         var answer = question_answers[question.i] && question_answers[question.i][k];
         var party = indexPartyHash[k];
 
-        if (answer) {
-            var item = document.createElement('div');
-            item.setAttribute('class', "tcol answer answer-type-" + answer);
-            var itemA = document.createElement('a');
-            itemA.setAttribute('href', answersUrl + question.s + '/' + party.s);
-            itemA.innerHTML = answer === 1 ? 'ja' : 'nej';
-            item.appendChild(itemA);
-            trow.appendChild(item);
-        } else {
-            var item = document.createElement('div');
-            item.setAttribute('class', "tcol answer empty");
-            var itemI = document.createElement('i');
-            itemI.setAttribute('class', 'fa fa-times');
-            item.appendChild(itemI);
-            trow.appendChild(item);
+        if (showParty(party)) {
+            if (answer) {
+                var item = document.createElement('div');
+                item.setAttribute('class', "tcol answer answer-type-" + answer);
+                var itemA = document.createElement('a');
+                itemA.setAttribute('href', answersUrl + question.s + '/' + party.s);
+                itemA.innerHTML = answer === 1 ? 'ja' : 'nej';
+                item.appendChild(itemA);
+                trow.appendChild(item);
+            } else {
+                var item = document.createElement('div');
+                item.setAttribute('class', "tcol answer empty");
+                var itemI = document.createElement('i');
+                itemI.setAttribute('class', 'fa fa-times');
+                item.appendChild(itemI);
+                trow.appendChild(item);
+            }
         }
     }
 
@@ -169,9 +239,40 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
 
         var qaTable = document.getElementById('qa-table');
+
+        loadSettings();
+
+        var settings = document.createElement('ul');
+        settings.setAttribute('class', 'settings');
+        
+        for (var i = 0; i < data.parties.length; i++) {
+            var party = data.parties[i];
+            var li = document.createElement('li');
+            var input = document.createElement('input');
+            input.setAttribute('type', 'checkbox');
+            input.setAttribute('name', party.i);
+
+            input.checked = showParty(party);
+            input.addEventListener('click', function () {
+                updateSettings();
+            });
+
+            li.appendChild(input);
+
+            var text = document.createElement('span');
+            text.innerText = party.n;
+
+            li.appendChild(text);
+            
+            settings.appendChild(li);
+        }
+
+        qaTable.appendChild(settings);
+
         var table = document.createElement(`div`);
         table.setAttribute('class', 'table');
         qaTable.appendChild(table);
+
         if (data.parties.length > 1) {
             var trowFiller = document.createElement('div');
             var tcolFiller = document.createElement('div');
@@ -189,6 +290,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 var tcolPartyLogo = document.createElement('div');
                 var tcolPartyLogoSmall = document.createElement('div');
                 tcol.setAttribute('class', 'tcol table-logo');
+
+                if (!showParty(party)) {
+                    tcol.setAttribute('style', 'display: none');
+                }
+
                 tcolA.setAttribute('href', partiesUrl + party.s);
                 tcolPartyLogo.setAttribute('class', 'party-logo party-logo-' + party.i);
                 tcolPartyLogoSmall.setAttribute('class', 'party-logo-small party-logo-small-' + party.i);
