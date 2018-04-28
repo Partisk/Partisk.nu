@@ -46,7 +46,14 @@
     </div>
     <div class="parties-list other row">
         <div class="col-6 parties">
-                {% for party in other.left %}
+            {% for party in other.left %}
+            <div class="party">
+                <h2><span class="party-logo party-logo-{{party.id}}"></span><a href="{% url 'party' party.slug %}">{{party.name|capfirst}}</a></h2>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-6 parties">
+                {% for party in other.right %}
                 <div class="party">
                     <h2><span class="party-logo party-logo-{{party.id}}"></span><a href="{% url 'party' party.slug %}">{{party.name|capfirst}}</a></h2>
                 </div>
