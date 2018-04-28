@@ -31,6 +31,7 @@ VIEW_CACHE_TIME = settings.VIEW_CACHE_TIME
 geo_reader = geolite2.reader()
 
 
+@login_required
 @permission_required('partisk.add_quiz')
 @csrf_protect
 def add_quiz(request):
@@ -42,6 +43,7 @@ def add_quiz(request):
     return redirect(reverse('quizzes'))
 
 
+@login_required
 @permission_required('partisk.edit_quiz')
 @csrf_protect
 def edit_quiz(request, quiz_id):
@@ -55,6 +57,7 @@ def edit_quiz(request, quiz_id):
     return redirect('quiz', quiz_name=quiz.slug)
 
 
+@login_required
 @permission_required('partisk.delete_quiz')
 @csrf_protect
 def delete_quiz(request, quiz_id):

@@ -43,6 +43,7 @@ def add_tags(request, question, clean=False):
             messages.success(request, 'Tag "%s" added' % tag)
 
 
+@login_required
 @permission_required('partisk.add_question')
 @csrf_protect
 def add_question(request):
@@ -56,6 +57,7 @@ def add_question(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+@login_required
 @permission_required('partisk.edit_question')
 @csrf_protect
 def edit_question(request, question_id):
@@ -74,6 +76,7 @@ def edit_question(request, question_id):
     return redirect('question', question_title=question.slug)
 
 
+@login_required
 @permission_required('partisk.delete_question')
 @csrf_protect
 def delete_question(request, question_id):

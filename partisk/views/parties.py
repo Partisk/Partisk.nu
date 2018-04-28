@@ -11,13 +11,14 @@ from partisk.models import Party, Answer, from_slug
 from partisk.utils import get_questions_for_answers, get_questions_json, \
                           get_answers_json, get_parties_json, \
                           get_qpa_table_data, get_user, get_answers_params, \
-                          get_parties_params
+                          get_parties_params, party_has_reps
 from partisk.forms import PartyModelForm
 
 
 VIEW_CACHE_TIME = settings.VIEW_CACHE_TIME
 
 
+@login_required
 @permission_required('partisk.add_party')
 @csrf_protect
 def add_party(request):
@@ -29,6 +30,7 @@ def add_party(request):
     return redirect(reverse('parties'))
 
 
+@login_required
 @permission_required('partisk.edit_party')
 @csrf_protect
 def edit_party(request, party_id):
@@ -42,6 +44,7 @@ def edit_party(request, party_id):
     return redirect('party', party_name=party.slug)
 
 
+@login_required
 @permission_required('partisk.delete_party')
 @csrf_protect
 def delete_party(request, party_id):
@@ -65,13 +68,16 @@ def parties(request):
     parties_other = []
 
     for party in parties_data:
-        if party.last_result_parliment >= 4 or party.last_result_eu >= 4:
+        if party_has_reps(party):
             parties_representants.append(party)
         else:
             parties_other.append(party)
 
-    parties_1 = parties_representants[:len(parties_representants)//2 + 1]
-    parties_2 = parties_representants[len(parties_representants)//2 + 1:]
+    parties_1 = parties_representants[:len(parties_representants)//2]
+    parties_2 = parties_representants[len(parties_representants)//2:]
+
+    parties_other_1 = parties_other[:len(parties_other)//2]
+    parties_other_2 = parties_other[len(parties_other)//2:]
 
     form = PartyModelForm() if settings.ADMIN_ENABLED else None
 
@@ -80,7 +86,8 @@ def parties(request):
             {'left': parties_1,
              'right': parties_2},
         'other':
-            {'left': parties_other},
+            {'left': parties_other_1,
+             'right': parties_other_2},
         'user': get_user(request),
         'form': form
     }
@@ -88,6 +95,7 @@ def parties(request):
     return render(request, 'parties.html', context)
 
 
+@login_required
 @permission_required('partisk.delete_party')
 @csrf_protect
 def delete_party(request, party_id):

@@ -20,6 +20,7 @@ from partisk.forms import TagModelForm
 VIEW_CACHE_TIME = settings.VIEW_CACHE_TIME
 
 
+@login_required
 @permission_required('partisk.add_tag')
 @csrf_protect
 def add_tag(request):
@@ -31,6 +32,7 @@ def add_tag(request):
     return redirect(reverse('tags'))
 
 
+@login_required
 @permission_required('partisk.edit_tag')
 @csrf_protect
 def edit_tag(request, tag_id):
@@ -44,6 +46,7 @@ def edit_tag(request, tag_id):
     return redirect('tag', tag_name=tag.slug)
 
 
+@login_required
 @permission_required('partisk.delete_tag')
 @csrf_protect
 def delete_tag(request, tag_id):

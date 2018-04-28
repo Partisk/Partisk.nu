@@ -1,10 +1,11 @@
 from django.conf import settings
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, login_required
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import cache_page
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic.detail import DetailView
 
 from partisk.models import Question, Answer, Party, from_slug, AnswerType
 from partisk.utils import get_questions_params, get_answers_params, get_user
@@ -13,6 +14,7 @@ from partisk.forms import AnswerSaveModelForm, AnswerModelForm
 VIEW_CACHE_TIME = settings.VIEW_CACHE_TIME
 
 
+@login_required
 @permission_required('partisk.add_answer')
 @csrf_protect
 def add_question_answer(request, question_id):
@@ -37,6 +39,7 @@ def add_question_answer(request, question_id):
     return redirect('question', question_title=question.slug)
 
 
+@login_required
 @permission_required('partisk.add_answer')
 @csrf_protect
 def add_answer(request):
@@ -47,33 +50,44 @@ def add_answer(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-
+@login_required
 @permission_required('partisk.edit_answer')
 @csrf_protect
 def edit_answer(request, answer_id):
     answer = get_object_or_404(Answer, id=answer_id)
-    party = get_object_or_404(Party, id=answer.party_id)
-    question = get_object_or_404(Question, id=answer.question_id)
 
     answer_form = AnswerModelForm(request.POST, instance=answer)
     answer = answer_form.save()
 
     messages.success(request, 'Answer "%s" updated')
 
-    return redirect('answer', question_title=question.slug,
-                    party_name=party.name)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+@login_required
 @permission_required('partisk.delete_answer')
 @csrf_protect
 def delete_answer(request, answer_id):
     answer = get_object_or_404(Answer, id=answer_id)
-    question = get_object_or_404(Question, id=answer.question_id)
 
     answer.deleted = True
     answer.save()
 
     messages.success(request, 'Answer deleted')
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+@permission_required('partisk.edit_answer')
+@csrf_protect
+def approve_answer(request, answer_id):
+    answer = get_object_or_404(Answer, id=answer_id)
+
+    answer.approved = True
+    answer.save()
+
+    messages.success(request, 'Answer approved')
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -116,3 +130,5 @@ def answer(request, question_title, party_name):
                                                        question_data.title
     }
     return render(request, 'answer.html', context)
+
+
