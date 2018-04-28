@@ -75,6 +75,12 @@ def graph_image(request, quiz_result_id):
     abspath = settings.GENERATED_IMG_PATH + quiz_result_id + '.jpg'
 
     quiz_results = QuizResults.objects.get(id=quiz_result_id)
+
+    
+
+    # mainParties = [x for x in parties  if x.last_result_parliment > 4]
+    # otherParties = [x for x in parties  if x.last_result_parliment < 4]
+
     generate_quiz_result_image(quiz_results, quiz_result_id)
 
     # kolla sa att det bara innehaller siffror och bokstaver
@@ -88,8 +94,10 @@ def graph_image(request, quiz_result_id):
 
 def generate_quiz_result_image(results, id):
     party_params = get_parties_params()
+    
     parties = Party.objects.filter(**party_params)
     no_parties = len(parties)
+    
 
     padd_x = 25
     padd_y = 100
@@ -177,8 +185,11 @@ def generate_quiz_result_image(results, id):
 
 def calculate_quiz_results(questions, a_data, city):
     party_params = get_parties_params()
+
+
     parties = Party.objects.filter(**party_params) \
                    .order_by('-last_result_parliment')
+
     question_ids = [q.id for q in questions]
     answer_params = get_answers_params({
         'question_id__in': question_ids,
@@ -221,6 +232,7 @@ def quiz_results(request, quiz_result_id):
     result = get_object_or_404(QuizResults, id=quiz_result_id)
     quiz = get_object_or_404(Quiz, id=result.quiz_id)
     party_params = get_parties_params()
+    
     parties = Party.objects.filter(**party_params)
     created = result.created
     qa = {}
@@ -239,10 +251,15 @@ def quiz_results(request, quiz_result_id):
                                                   quiz_answers_data)
 
     parties_json = {}
+
+    main_parties = [x for x in parties  if x.last_result_parliment > 4]
+    other_parties = [x for x in parties  if x.last_result_parliment < 4]
+
     for party in parties:
         parties_json[party.id] = {
             'name': party.name,
-            'color': party.color
+            'color': party.color,
+            'main':bool(party.last_result_parliment > 4)
         }
 
     return render(request, "results.html", {
@@ -250,6 +267,8 @@ def quiz_results(request, quiz_result_id):
         'data': result.data,
         'parties_json': json.dumps(parties_json),
         'parties': parties,
+        'main_parties':main_parties,
+        'other_parties':other_parties,
         'quiz': quiz,
         'quiz_result_id': quiz_result_id,
         'created': created,
