@@ -1,6 +1,6 @@
 import json
 from itertools import groupby
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib import messages
 from django.conf import settings
 from django.urls import reverse

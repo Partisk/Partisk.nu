@@ -4,7 +4,7 @@ import json
 import datetime
 import os
 from geolite2 import geolite2
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib import messages
 from django.urls import reverse
 from django import forms
