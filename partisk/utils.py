@@ -44,7 +44,8 @@ def get_parties_json(parties):
     return [{
         'n': party.name,
         'i': int(party.id),
-        's': party.slug
+        's': party.slug,
+        'x': party_has_reps(party),
     } for party in parties]
 
 
@@ -184,3 +185,6 @@ def get_user(request):
         }
     }
 
+
+def party_has_reps(party):
+    return party.last_result_parliment >= 4

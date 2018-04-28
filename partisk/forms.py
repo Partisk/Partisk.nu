@@ -1,6 +1,7 @@
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Field, HTML, Layout, Div
+from django.urls import reverse
 
 from partisk.models import Answer, Party, Question, Quiz, Tag, Stuff
 
@@ -36,6 +37,20 @@ class AnswerModelForm(forms.ModelForm):
         model = Answer
         fields = ('answer_type', 'party', 'source', 'date', 'description', 'question', 'stuff')
 
+
+class ApproveAnswerModelForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ApproveAnswerModelForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        #self.helper.form_action = reverse('edit_answer', args={'answer_id': self.instance.id})
+        self.helper.add_input(Submit('submit', 'Update answer'))
+
+    class Meta:
+        model = Answer
+        fields = ('answer_type', 'party', 'source', 'date', 'description', 'question')
 
 class PartyModelForm(forms.ModelForm):
     class Meta:
