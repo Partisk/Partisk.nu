@@ -8,11 +8,10 @@ from partisk.views import parties, add_party, delete_party, edit_party, party
 from partisk.views import tags, add_tag, delete_tag, edit_tag, tag
 from partisk.views import quizzes, add_quiz, delete_quiz, edit_quiz, \
                           save_quiz_results, quiz_results, quiz
-from partisk.views import answer, add_answer, add_question_answer, edit_answer, approve_answer
+from partisk.views import answer, add_answer, add_question_answer, edit_answer
 from partisk.views import stuff, admin_index, StuffDetail, handle, \
-                          stuff_done, ApproveAnswerDetail, \
-                          approve_answers, delete_answer \
-                          #ApproveQuestionDetail, approve_questions
+                          stuff_done, ApproveAnswerDetail, ApproveQuestionDetail, \
+                          approve_answers, delete_answer, approve_answer, approve_questions, approve_question
 from partisk.views import search
 from partisk.views import contact
 from partisk.views import about
@@ -76,8 +75,6 @@ if settings.ADMIN_ENABLED:
             name='delete_answer'),
         url(r'^admin/answer/edit/(?P<answer_id>.+)$', edit_answer,
             name='edit_answer'),
-        url(r'^admin/answer/approve/(?P<answer_id>.+)$', approve_answer,
-            name='approve_answer'),
         url(r'^admin/$', admin_index, name='admin'),
         url(r'^admin/stuff/$', stuff, name='stuff'),
         url(r'^admin/stuff/(?P<stuff_id>.+)/done$', stuff_done,
@@ -89,6 +86,14 @@ if settings.ADMIN_ENABLED:
             name='approve_answers'),
         url(r'^admin/approve/answers/(?P<pk>.+)/$',
             ApproveAnswerDetail.as_view(), name='approve_answer_detail'),
+        url(r'^admin/approve/answer/(?P<answer_id>.+)$', approve_answer,
+            name='approve_answer'),
+        url(r'^admin/approve/questions/$', approve_questions,
+            name='approve_questions'),
+        url(r'^admin/approve/questions/(?P<pk>.+)/$',
+            ApproveQuestionDetail.as_view(), name='approve_question_detail'),
+        url(r'^admin/approve/question/(?P<question_id>.+)$', approve_question,
+            name='approve_question'),
 #        url(r'^admin/approve/questions/$', approve_questions,
 #            name='approve_questions'),
 #        url(r'^admin/approve/questions/(?P<question_id>.+)/$',

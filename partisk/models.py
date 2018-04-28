@@ -121,6 +121,7 @@ class Question(models.Model):
     done = models.BooleanField(default=False)
     version = models.IntegerField(blank=True, null=True)
     tags = models.ManyToManyField('Tag', through='QuestionTags', blank=True)
+
     created_by = models.IntegerField(default=None, null=True)
 
     def _get_slug(self):
@@ -134,6 +135,13 @@ class Question(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save_model(self, request, question, form, change):
+        question.save()
+        print (form.cleaned_data)
+        print (question)
+        print (request)
+        add_tags(self.tags_string, question, self.user, True)
 
 
 class QuizAnswer(models.Model):

@@ -78,18 +78,18 @@ def delete_answer(request, answer_id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-@login_required
-@permission_required('partisk.edit_answer')
-@csrf_protect
-def approve_answer(request, answer_id):
-    answer = get_object_or_404(Answer, id=answer_id)
+#@login_required
+#@permission_required('partisk.edit_answer')
+#@csrf_protect
+#def approve_answer(request, answer_id):
+#    answer = get_object_or_404(Answer, id=answer_id)
 
-    answer.approved = True
-    answer.save()
+#    answer.approved = True
+#    answer.save()
 
-    messages.success(request, 'Answer approved')
+#    messages.success(request, 'Answer approved')
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+#    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @cache_page(VIEW_CACHE_TIME)

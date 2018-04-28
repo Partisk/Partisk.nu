@@ -8,6 +8,26 @@ def merge_two_dicts(x, y):
     return z
 
 
+def add_tags(tags_string, question, user, clean=False):
+    if clean:
+        QuestionTags.objects.filter(question_id=question.id).delete()
+
+    tags = [t.strip() for t in tags_string.split(',')]
+
+    for name in tags:
+        tag, created = Tag.objects.get_or_create(
+            name=name,
+            defaults={
+                'created_by': user.id,
+                'updated_by': None,
+                'deleted': False,
+                'is_category': False
+            }
+        )
+
+        QuestionTags.objects.create(tag=tag, question=question)
+
+
 def get_params(params, include_deleted, include_approved):
     args = {'deleted': False}
 

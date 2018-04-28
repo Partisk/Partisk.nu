@@ -12,35 +12,10 @@ from partisk.models import Question, Tag, Party, Answer, QuestionTags, \
 from partisk.utils import get_questions_json, get_answers_json, \
                     get_parties_json, get_user, get_tags_for_question, \
                     get_qpa_table_data, get_questions_params, \
-                    get_answers_params, get_parties_params
+                    get_answers_params, get_parties_params, add_tags
 from partisk.forms import QuestionModelForm, AnswerModelForm
 
 VIEW_CACHE_TIME = settings.VIEW_CACHE_TIME
-
-
-def add_tags(request, question, clean=False):
-    data = request.POST
-    if data.get('tags', None):
-        if clean:
-            QuestionTags.objects.filter(question_id=question.id).delete()
-
-        tags = [t.strip() for t in data['tags'].split(',')]
-
-    for name in tags:
-        tag, created = Tag.objects.get_or_create(
-            name=name,
-            defaults={
-                'created_by': request.user.id,
-                'updated_by': None,
-                'deleted': False,
-                'is_category': False
-            }
-        )
-
-        QuestionTags.objects.create(tag=tag, question=question)
-
-        if created:
-            messages.success(request, 'Tag "%s" added' % tag)
 
 
 @login_required
@@ -84,7 +59,8 @@ def delete_question(request, question_id):
 
     question.deleted = True
     question.save()
-
+    print ('delete')
+    print (question_id)
     messages.success(request, 'Question "%s" deleted' % question.title)
 
     return redirect('questions')

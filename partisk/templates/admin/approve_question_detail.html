@@ -11,22 +11,22 @@
         <div class="col-lg-12">
             <div class="row">
                 <div class="col-lg-6">
-                        <h1>{{total}}</h1>
-                        <div>
-                            <b>{{ object.party.name }}</b> - {{ object.question.title }}: {{ object.answer_type.answer}}
-                        </div>
-                        <div>
-                            {{ object.description }}
-                        </div>
-                        <div>
-                            <a href="{{ object.source }}" target="_blank">{{ object.source }}</a>
-                        </div>
+                    <h1>{{total}}</h1>
+                    <div>
+                        <b>X tycker att {{ object.title }}</b>
+                    </div>
+                    <div>
+                        <b>X tycker inte att {{ object.title }}</b>
+                    </div>
+                    <div>
+                        {{ object.description }}
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    <a href="{% url 'delete_answer' object.id %}" class="btn btn-danger">Delete</a>
-                    <a href="{% url 'approve_answer' object.id %}" class="btn btn-success">Approve</a>
+                    <a href="{% url 'delete_question' object.id %}" class="btn btn-danger">Delete</a>
+                    <a href="{% url 'approve_question' object.id %}" class="btn btn-success">Approve</a>
                 </div>
             </div>
             {% crispy form %}

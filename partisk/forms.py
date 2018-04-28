@@ -2,6 +2,7 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Field, HTML, Layout, Div
 from django.urls import reverse
+from partisk.utils import add_tags
 
 from partisk.models import Answer, Party, Question, Quiz, Tag, Stuff
 
@@ -52,6 +53,38 @@ class ApproveAnswerModelForm(forms.ModelForm):
         model = Answer
         fields = ('answer_type', 'party', 'source', 'date', 'description', 'question')
 
+
+class ApproveQuestionModelForm(forms.ModelForm):
+    tags_string = forms.TextInput()
+
+    def __init__(self, user, *args, **kwargs):
+        super(ApproveQuestionModelForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.layout = Layout(
+            'title', 'description',
+            Div(
+                HTML('<label class="col-form-label col-lg-2">Tags</label>'),
+                HTML('<div class="col-lg-8"><input name="tags_string" class="form-control" value="{{question_tags_string}}" type="text" /></div>'),
+                css_class="form-group row"
+            )
+        )
+        self.helper.add_input(Submit('submit', 'Update question'))
+        self.user = user
+
+    def save(self, commit=True):
+        question = super(ApproveQuestionModelForm, self).save(commit=True)
+        add_tags(self.data.get('tags_string'), question, self.user, True)
+
+        return question
+
+    class Meta:
+        model = Question
+        fields = ('title', 'description')
+
+
 class PartyModelForm(forms.ModelForm):
     class Meta:
         model = Party
@@ -84,6 +117,7 @@ class QuestionModelForm(forms.ModelForm):
 class StuffModelForm(forms.ModelForm):
     content = forms.CharField(required=False)
     title = forms.CharField(required=False)
+
     class Meta:
         model = Stuff
         fields = ('content', 'source_type', 'url', 'title')
