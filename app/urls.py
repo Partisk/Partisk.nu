@@ -11,7 +11,7 @@ from partisk.views import quizzes, add_quiz, delete_quiz, edit_quiz, \
 from partisk.views import answer, add_answer, add_question_answer, edit_answer
 from partisk.views import stuff, admin_index, StuffDetail, handle, \
                           stuff_done, ApproveAnswerDetail, ApproveQuestionDetail, \
-                          approve_answers, delete_answer, approve_answer, approve_questions, approve_question
+                          approve_answers, delete_answer, approve_answer, approve_questions, approve_question, PartyExportList
 from partisk.views import search
 from partisk.views import contact
 from partisk.views import about
@@ -94,6 +94,8 @@ if settings.ADMIN_ENABLED:
             ApproveQuestionDetail.as_view(), name='approve_question_detail'),
         url(r'^admin/approve/question/(?P<question_id>.+)$', approve_question,
             name='approve_question'),
+        url(r'^admin/party_export/$',
+            PartyExportList.as_view(), name='party_export'),
 #        url(r'^admin/approve/questions/$', approve_questions,
 #            name='approve_questions'),
 #        url(r'^admin/approve/questions/(?P<question_id>.+)/$',

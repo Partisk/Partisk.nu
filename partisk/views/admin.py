@@ -8,6 +8,7 @@ from django.forms.models import inlineformset_factory
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.edit import UpdateView
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from django.urls import reverse
 import bleach
         
@@ -67,14 +68,14 @@ class StuffDetail(PermissionRequiredMixin, DetailView):
 
 @login_required
 def approve_answers(request):
-    obj = Answer.objects.filter(approved=False, deleted=False).first()
+    obj = Answer.objects.filter(approved=False, deleted=False).order_by('id').first()
     return redirect(reverse('approve_answer_detail',
                     kwargs={'pk': obj.id}))
 
 
 @login_required
 def approve_questions(request):
-    obj = Question.objects.filter(approved=False, deleted=False).first()
+    obj = Question.objects.filter(approved=False, deleted=False).order_by('id').first()
     return redirect(reverse('approve_question_detail',
                     kwargs={'pk': obj.id}))
 
@@ -117,7 +118,13 @@ class ApproveQuestionDetail(PermissionRequiredMixin, UpdateView):
         return kwargs
 
 
-
+class PartyExportList(ListView):
+    model = Question
+    template_name = 'admin/export_parties.html'
+    
+    def get_queryset(self):
+        return Question.objects.filter(approved=True, deleted=False)
+        
 
 @login_required
 @permission_required('partisk.edit_stuff')
