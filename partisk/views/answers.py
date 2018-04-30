@@ -104,7 +104,7 @@ def answer(request, question_title, party_name):
         'question_id': question_data.id,
         'party_id': party_data.id
     })
-    answer_data = get_object_or_404(Answer, **answer_params)
+    answer_data = Answer.objects.filter(**answer_params).order_by('-date').first()
 
     answer_text = answer_data.party.name.capitalize()
 
