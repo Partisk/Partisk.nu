@@ -91,7 +91,7 @@ class ApproveAnswerDetail(PermissionRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(ApproveAnswerDetail, self).get_context_data(**kwargs)
-        context['total'] = Question.objects.filter(approved=False, deleted=False).count()
+        context['total'] = Answer.objects.filter(approved=False, deleted=False).count()
         return context
 
 
