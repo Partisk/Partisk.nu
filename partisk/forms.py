@@ -51,7 +51,7 @@ class ApproveAnswerModelForm(forms.ModelForm):
 
     class Meta:
         model = Answer
-        fields = ('answer_type', 'party', 'source', 'date', 'description', 'question')
+        fields = ('answer_type', 'party', 'source', 'date', 'description', 'question', 'outdated')
 
 
 class ApproveQuestionModelForm(forms.ModelForm):

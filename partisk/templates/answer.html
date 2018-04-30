@@ -29,6 +29,9 @@
             <h1 class="{% if answer.deleted %}deleted{% endif %}">
                 {{ description }}
             </h1>
+            {% if answer.outdated %}
+                <p>Obs, detta svar kan vara inaktuellt</p>
+            {% endif %}
             {{ answer.description }}
             <a href='{{ answer.source }}'>Källa</a>
         </div>

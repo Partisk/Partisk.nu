@@ -38,7 +38,8 @@ class Answer(models.Model):
     approved = models.BooleanField(default=False)
     created_by = models.IntegerField(default=None, null=True)
     stuff = models.ForeignKey('Stuff', on_delete=models.SET_NULL, null=True, blank=True)
-    
+    outdated = models.BooleanField(default=False)
+
     class Meta:
         db_table = 'answers'
 
