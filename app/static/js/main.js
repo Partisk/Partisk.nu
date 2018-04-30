@@ -47,8 +47,7 @@ function updateCookie(cname, value) {
     var myDate = new Date();
     myDate.setMonth(myDate.getMonth() + 12);
 
-    document.cookie = cname + '=' + value + ';expires=' + myDate + ';';
-    console.log(cname + '=' + value + ';');
+    document.cookie = cname + '=' + value + ';expires=' + myDate + ';domain=' + window.location.hostname + ';';
 }
 
 var loadSettings = function () {
