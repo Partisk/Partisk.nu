@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     "compressor",
     "cookielaw",
     'crispy_forms',
+    'django_markdown2',
 ]
 
 MIDDLEWARE = [

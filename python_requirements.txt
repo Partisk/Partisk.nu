@@ -8,3 +8,4 @@ twitterscraper===0.4
 bleach===2.1.2
 django-cookie-law===1.0.13
 django-crispy-forms===1.7.2
+django-markdown2===2.3.5
