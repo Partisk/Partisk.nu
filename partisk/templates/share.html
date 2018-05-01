@@ -1,0 +1,18 @@
+<div class="share">
+    <a href="http://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" title="Facebook">
+        <i class="fa fa-facebook-square"></i>
+    </a>
+    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&amp;text={{ title }}&amp;via=partisknu"
+        title="Twitter">
+        <i class="fa fa-twitter-square"></i>
+    </a>
+    <a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}" title="Google+">
+        <i class="fa fa-google-plus-square"></i>
+    </a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ request.build_absolute_uri }}" title="Linkedin">
+        <i class="fa fa-linkedin"></i>
+    </a>
+    <a href="http://reddit.com/submit?url={{ request.build_absolute_uri }}&amp;title={{ title }}" title="Reddit">
+        <i class="fa fa-reddit-square"></i>
+    </a>
+</div>

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block social %}
-    {% include "social.html" with title=title description=description image='images/logo.png' %}
+    {% include "social.html" with title=tag.name|capfirst description=description image='images/logo.png' %}
 {% endblock %}
 {% block breadcrumbs %} {{block.super}}
     <span class="divider">&gt;</span>
@@ -23,6 +23,11 @@
     <div class="row">
         <div class="col-12">
             <h1>{{tag.name|capfirst}}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {% include "share.html" with title=tag.name|capfirst %}
         </div>
     </div>
     <div class="row">

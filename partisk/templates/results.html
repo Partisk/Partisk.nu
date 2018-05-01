@@ -12,6 +12,12 @@
 {% endblock %}
 {% block content %}
 {% block title %}Resultat för {{ quiz.name }}{% endblock %}
+
+<div class="row">
+    <div class="col-12">
+        {% include "share.html" with title=title %}
+    </div>
+</div>
 {{ created|date:'Y/m/d' }}
 {{ quiz.name }}
 <table>
