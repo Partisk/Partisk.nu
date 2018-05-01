@@ -47,7 +47,7 @@
 
 {% if qa %}
     {% for k, q in qa.questions.items %}
-        <h2>{{q.question.title}}</h2>
+        <h2><a href="{% url 'question' q.question.slug %}">{{q.question.title}}</a></h2>
         Ditt svar: {{q.quiz_answer.answer_type.answer}}
         {% for a in q.answers %}
             {% if a.answer %}
