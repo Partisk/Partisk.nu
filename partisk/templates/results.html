@@ -52,10 +52,12 @@
         {% for a in q.answers %}
             {% if a.answer %}
                 <div>
-                    {{a.party.name}}: <a href="{% url 'answer' q.question.slug a.party.slug %}">{{a.answer.answer_type.answer}}</a>
+                    <a href="{% url 'party' a.party.slug %}">{{a.party.name}}</a>:
+                    <a href="{% url 'answer' q.question.slug a.party.slug %}">{{a.answer.answer_type.answer}}</a>
                 </div>
             {% else %}
-                <div>{{a.party.name}}: Inget svar</div>
+                <div>
+                    <a href="{% url 'party' a.party.slug %}">{{a.party.name}}</a> Inget svar</div>
             {% endif %}
         {% endfor %}
     {% endfor %}
