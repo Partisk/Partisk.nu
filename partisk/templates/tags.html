@@ -27,7 +27,7 @@
                         <h2>{{category.letter}}</h2>
                         <ul class="tags">
                         {% for item in category.items %}
-                            <li><a href="{% url 'tag' item.tag.slug %}">{{item.tag.name}}</a></li>
+                            <li><a href="{% url 'tag' item.tag.slug %}">{{item.tag.name}}</a> ({{item.tag.questions.count}})</li>
                         {% endfor %}
                         </ul>
                     {% endfor %}

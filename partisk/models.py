@@ -201,8 +201,7 @@ class Quiz(models.Model):
     deleted = models.BooleanField(default=False)
     approved_date = models.DateTimeField(blank=True, null=True)
     created_by = models.IntegerField(default=None, null=True)
-    questions = models.ManyToManyField('Question', through='QuestionQuizzes', related_name='questions')
-
+    questions = models.ManyToManyField('Question', through='QuestionQuizzes')
 
     def _get_slug(self):
         return get_slug(self, self.name)
@@ -225,7 +224,8 @@ class Tag(models.Model):
     is_category = models.NullBooleanField(blank=True)
     created_by = models.IntegerField(default=None, null=True)
     updated_by = models.IntegerField(default=None, null=True)
-
+    questions = models.ManyToManyField('Question', through='QuestionTags')
+    
     def _get_slug(self):
         return get_slug(self, self.name)
 
