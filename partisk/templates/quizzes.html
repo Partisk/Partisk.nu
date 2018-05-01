@@ -34,7 +34,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-content">
-                    <a href="{% url 'quiz' quiz.slug %}">{{quiz.name|capfirst}}</a>
+                    <a href="{% url 'quiz' quiz.slug %}">{{quiz.name|capfirst}} ({{quiz.questions.count}})</a>
                     <p>{{quiz.description|capfirst}}</p>
                 </div>
             </div>
