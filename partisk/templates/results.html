@@ -47,17 +47,17 @@
 
 {% if qa %}
     {% for k, q in qa.questions.items %}
-        <h2><a href="{% url 'question' q.question.slug %}">{{q.question.title}}</a></h2>
+        <h2><a href="{% url 'question' q.question.slug %}">{{q.question.title|capfirst}}</a></h2>
         Ditt svar: {{q.quiz_answer.answer_type.answer}}
         {% for a in q.answers %}
             {% if a.answer %}
                 <div>
-                    <a href="{% url 'party' a.party.slug %}">{{a.party.name}}</a>:
+                    <a href="{% url 'party' a.party.slug %}">{{a.party.name|capfirst}}</a>:
                     <a href="{% url 'answer' q.question.slug a.party.slug %}">{{a.answer.answer_type.answer}}</a>
                 </div>
             {% else %}
                 <div>
-                    <a href="{% url 'party' a.party.slug %}">{{a.party.name}}</a> Inget svar</div>
+                    <a href="{% url 'party' a.party.slug %}">{{a.party.name|capfirst}}</a> Inget svar</div>
             {% endif %}
         {% endfor %}
     {% endfor %}
