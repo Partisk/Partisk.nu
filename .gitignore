@@ -106,7 +106,6 @@ venv.bak/
 
 .vscode
 
-app/settings/prod.py
 app/settings/dev.py
 app/settings/external.py
 app/build
