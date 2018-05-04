@@ -16,8 +16,8 @@ MIDDLEWARE = [
     'django.middleware.cache.FetchFromCacheMiddleware'
 ]
 
-DEBUG = os.environ.get('DEBUG') is 'True'
-COMPRESS_ENABLED = os.environ.get('COMPRESS') is 'True'
+DEBUG = os.environ.get('DEBUG') == 'True'
+COMPRESS_ENABLED = os.environ.get('COMPRESS') == 'True'
 
 VIEW_CACHE_TIME = 0
 CACHE_MIDDLEWARE_SECONDS = VIEW_CACHE_TIME
@@ -48,4 +48,4 @@ DATABASES = {
 
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
-ADMIN_ENABLED = os.environ.get('ADMIN_ENABLED') is 'True'
+ADMIN_ENABLED = os.environ.get('ADMIN_ENABLED') == 'True'
