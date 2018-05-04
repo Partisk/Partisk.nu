@@ -16,8 +16,8 @@ MIDDLEWARE = [
     'django.middleware.cache.FetchFromCacheMiddleware'
 ]
 
-DEBUG = False
-COMPRESS_ENABLED = True
+DEBUG = os.environ['DEBUG'] is True
+COMPRESS_ENABLED = os.environ['COMPRESS'] is True
 
 VIEW_CACHE_TIME = 0
 CACHE_MIDDLEWARE_SECONDS = VIEW_CACHE_TIME
