@@ -1,6 +1,8 @@
 import os
 from app.settings.common import *
 
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'partisk.nu']
+
 MIDDLEWARE = [
     'django.middleware.cache.UpdateCacheMiddleware',
     'pipeline.middleware.MinifyHTMLMiddleware',
