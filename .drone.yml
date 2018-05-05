@@ -1,0 +1,3 @@
+pipeline:
+  build:
+    image: partisk_web
