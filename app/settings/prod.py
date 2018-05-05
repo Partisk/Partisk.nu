@@ -1,7 +1,7 @@
 import os
 from app.settings.common import *
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'partisk.nu']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web']
 
 MIDDLEWARE = [
     'django.middleware.cache.UpdateCacheMiddleware',
