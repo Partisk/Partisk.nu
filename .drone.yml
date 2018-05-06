@@ -19,8 +19,9 @@ pipeline:
   publish:
     image: plugins/docker
     registry: ${REGISTRY_URL}
-    username: ${REGISTRY_USERNAME}
-    password: ${REGISTRY_PASSWORD}
+    #username: ${REGISTRY_USERNAME}
+    #password: ${REGISTRY_PASSWORD}
+    secrets: [registry_username, registry_password]
     #email: ${REGISTRY_EMAIL}
     repo: ci.presight.se:5000/partisk/web
     #tag: ${REGISTRY_URL}/partisk/web
