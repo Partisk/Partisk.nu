@@ -17,6 +17,7 @@ pipeline:
       event: [push, pull_request]
   publish:
     docker:
+      image: plugins/docker
       registry: $REGISTRY_URL
       username: $REGISTRY_USERNAME
       password: $REGISTRY_PASSWORD
