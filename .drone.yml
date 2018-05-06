@@ -26,4 +26,6 @@ pipeline:
     tag: ${DRONE_REPO_BRANCH}
     file: Dockerfile
     insecure: false
-
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
+    debug: true
