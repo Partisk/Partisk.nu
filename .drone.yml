@@ -22,7 +22,7 @@ pipeline:
     password: ${REGISTRY_PASSWORD}
     email: ${REGISTRY_EMAIL}
     repo: partisk_web
-    tag: $$BRANCH
+    tag: ${DRONE_REPO_BRANCH}
     file: Dockerfile
     insecure: false
     
