@@ -13,6 +13,15 @@ pipeline:
     commands:
       - pip install --trusted-host pypi.python.org -r python_requirements.txt
     when:
-      branch: [ master ]
+      branch: [master]
       event: [push, pull_request]
-
+publish:
+  docker:
+    registry: $REGISTRY_URL
+    username: $REGISTRY_USERNAME
+    password: $REGISTRY_PASSWORD
+    email: $REGISTRY_EMAIL
+    repo: partisk_web
+    tag: $$BRANCH
+    file: Dockerfile
+    insecure: false
