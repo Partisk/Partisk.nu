@@ -1,10 +1,17 @@
 pipeline:
-  setup:
-    image: docker
-    commands:
-      - docker build --rm -t partisk_web partisk.nu/web/
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
   build:
-    image: partisk_web
+    image: python:3.6
+    commands:
+      - export DJANGO_SETTINGS_MODULE=app.settings.prod
+      - export DATABASE_USER $PARTISK_DB_USER
+      - export DATABASE_PASSWORD $PARTISK_DB_PASSWORD
+      - export DATABASE_HOST db
+      - export SECRET_KEY $DJANGO_SECRET
+      - export ADMIN_ENABLED False
+      - export COMPRESS False
+      - export DEBUG True
+      - pip install --trusted-host pypi.python.org -r python_requirements.txt
+    when:
+      branch: [ master ]
+      event: [push, pull_request]
 
