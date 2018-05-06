@@ -1,4 +1,10 @@
 pipeline:
+  setup:
+    image: docker
+    commands:
+      - docker build --rm -t partisk_web partisk.nu/web/
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   build:
     image: partisk_web
 
