@@ -25,3 +25,4 @@ pipeline:
     tag: $$BRANCH
     file: Dockerfile
     insecure: false
+    
