@@ -17,7 +17,7 @@ pipeline:
       event: [push, pull_request]
 
   publish:
-    secrets: [registry_username, registry_password]
+    secrets: [docker_username, docker_password]
     image: plugins/docker
     registry: ${REGISTRY_URL}
     #username: ${REGISTRY_USERNAME}
