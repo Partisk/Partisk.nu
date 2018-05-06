@@ -1,15 +1,16 @@
 pipeline:
   build:
     image: python:3.6
+    environment:
+      - DJANGO_SETTINGS_MODULE=app.settings.prod
+      - DATABASE_USER=$PARTISK_DB_USER
+      - DATABASE_PASSWORD=$PARTISK_DB_PASSWORD
+      - DATABASE_HOST=db
+      - SECRET_KEY=$DJANGO_SECRET
+      - ADMIN_ENABLED=False
+      - COMPRESS=False
+      - DEBUG=True
     commands:
-      - export DJANGO_SETTINGS_MODULE=app.settings.prod
-      - export DATABASE_USER $PARTISK_DB_USER
-      - export DATABASE_PASSWORD $PARTISK_DB_PASSWORD
-      - export DATABASE_HOST db
-      - export SECRET_KEY $DJANGO_SECRET
-      - export ADMIN_ENABLED False
-      - export COMPRESS False
-      - export DEBUG True
       - pip install --trusted-host pypi.python.org -r python_requirements.txt
     when:
       branch: [ master ]
