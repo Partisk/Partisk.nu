@@ -22,7 +22,7 @@ pipeline:
     username: ${REGISTRY_USERNAME}
     password: ${REGISTRY_PASSWORD}
     email: ${REGISTRY_EMAIL}
-    repo: ${REGISTRY_URL}/partisk/web
+    repo: ${REGISTRY_URL}/partisk_web
     tag: ${DRONE_REPO_BRANCH}
     file: Dockerfile
     insecure: false
