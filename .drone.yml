@@ -15,15 +15,15 @@ pipeline:
     when:
       branch: [master]
       event: [push, pull_request]
-  publish:
-    docker:
-      image: plugins/docker
-      registry: ${REGISTRY_URL}
-      username: ${REGISTRY_USERNAME}
-      password: ${REGISTRY_PASSWORD}
-      email: ${REGISTRY_EMAIL}
-      repo: partisk_web
-      tag: ${DRONE_REPO_BRANCH}
-      file: Dockerfile
-      insecure: false
+publish:
+  docker:
+    image: plugins/docker
+    registry: ${REGISTRY_URL}
+    username: ${REGISTRY_USERNAME}
+    password: ${REGISTRY_PASSWORD}
+    email: ${REGISTRY_EMAIL}
+    repo: partisk_web
+    tag: ${DRONE_REPO_BRANCH}
+    file: Dockerfile
+    insecure: false
 
