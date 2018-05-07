@@ -17,6 +17,10 @@ pipeline:
       event: [push, pull_request]
 
   publish:
+    environment:
+      - DOCKER_PASSWORD=${DOCKER_PASSWORD}
+      - DOCKER_USERNAME=${DOCKER_USERNAME}
+      - REGISTRY_URL=${REGISTRY_URL}
     #secrets: [docker_username, docker_password]
     #image: plugins/docker:17.05
     #registry: ${REGISTRY_URL}
