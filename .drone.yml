@@ -17,6 +17,9 @@ pipeline:
       event: [push, pull_request]
 
   publish:
+    environment:
+      - A=$$DOCKER_USERNAME
+      - B=$DOCKER_USERNAME
     #secrets: [docker_username, docker_password]
     #image: plugins/docker:17.05
     #registry: ${REGISTRY_URL}
@@ -33,7 +36,7 @@ pipeline:
     image: docker
     secrets: [docker_username,docker_password]
     commands:
-        - docker login --username=${DOCKER_USERNAME} --password=$${DOCKER_PASSWORD} $${REGISTRY_URL}a${REGISTRY_URL}
+        - docker login $$A d $A b $B c $BB --username=$DOCKER_USERNAME --password=$$DOCKER_PASSWORD $${REGISTRY_URL}a${REGISTRY_URL}
         - docker build -t ${REGISTRY_URL}/partisk/web:master .
         - docker push ${REGISTRY_URL}/partisk/web:master
     volumes:
