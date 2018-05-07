@@ -18,8 +18,8 @@ pipeline:
 
   publish:
     environment:
-      - A=$$DOCKER_USERNAME
-      - B=$DOCKER_USERNAME
+      - DOCKER_USERNAME=$$DOCKER_USERNAME
+      - DOCKER_PASSWORD=$$DOCKER_PASSWORD
     #secrets: [docker_username, docker_password]
     #image: plugins/docker:17.05
     #registry: ${REGISTRY_URL}
@@ -34,7 +34,7 @@ pipeline:
     #  - DOCKER_LAUNCH_DEBUG=true
     #debug: true
     image: docker
-    secrets: [docker_username,docker_password]
+    #secrets: [docker_username,docker_password]
     commands:
         - docker login $$A d $A b $B c $BB --username=$DOCKER_USERNAME --password=$$DOCKER_PASSWORD $${REGISTRY_URL}a${REGISTRY_URL}
         - docker build -t ${REGISTRY_URL}/partisk/web:master .
