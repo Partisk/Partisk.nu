@@ -18,7 +18,7 @@ pipeline:
 
   publish:
     secrets: [docker_username, docker_password]
-    image: plugins/docker
+    image: plugins/docker:17.05
     registry: ${REGISTRY_URL}
     #username: ${REGISTRY_USERNAME}
     #password: ${REGISTRY_PASSWORD}
