@@ -1,20 +1,20 @@
 pipeline:
-  build:
-    image: python:3.6
-    environment:
-      - DJANGO_SETTINGS_MODULE=app.settings.prod
-      - DATABASE_USER=${PARTISK_DB_USER}
-      - DATABASE_PASSWORD=${PARTISK_DB_PASSWORD}
-      - DATABASE_HOST=db
-      - SECRET_KEY=${DJANGO_SECRET}
-      - ADMIN_ENABLED=False
-      - COMPRESS=False
-      - DEBUG=True
-    commands:
-      - pip install --trusted-host pypi.python.org -r python_requirements.txt
-    when:
-      branch: [master]
-      event: [push, pull_request]
+  #build:
+  #  image: python:3.6
+  #  environment:
+  #    - DJANGO_SETTINGS_MODULE=app.settings.prod
+  #    - DATABASE_USER=${PARTISK_DB_USER}
+  #    - DATABASE_PASSWORD=${PARTISK_DB_PASSWORD}
+  #    - DATABASE_HOST=db
+  #    - SECRET_KEY=${DJANGO_SECRET}
+  #    - ADMIN_ENABLED=False
+  #    - COMPRESS=False
+  #    - DEBUG=True
+  #  commands:
+  #    - pip install --trusted-host pypi.python.org -r python_requirements.txt
+  #  when:
+  #    branch: [master]
+  #    event: [push, pull_request]
 
   publish:
     secrets: [docker_username, docker_password]
@@ -23,7 +23,7 @@ pipeline:
     #username: ${REGISTRY_USERNAME}
     #password: ${REGISTRY_PASSWORD}
     #email: ${REGISTRY_EMAIL}
-    #repo: ci.presight.se:5000/partisk/web
+    repo: ci.presight.se:5000/partisk/web
     #tag: ${REGISTRY_URL}/partisk/web
     file: Dockerfile
     insecure: false
