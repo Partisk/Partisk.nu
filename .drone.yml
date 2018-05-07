@@ -19,8 +19,8 @@ pipeline:
   publish:
     secrets: [docker_username, docker_password, registry, repo]
     image: plugins/docker:17.10
-    #registry: ci.presight.se:5000
-    #repo: ci.presight.se:5000/partisk/web
+    registry: ci.presight.se:5000
+    repo: ci.presight.se:5000/partisk/web
     tag: ${DRONE_REPO_BRANCH}
     file: Dockerfile
     insecure: false
