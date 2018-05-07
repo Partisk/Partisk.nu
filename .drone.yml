@@ -17,10 +17,10 @@ pipeline:
   #    event: [push, pull_request]
 
   publish:
-    secrets: [docker_username, docker_password]
+    secrets: [docker_username, docker_password, registry, repo]
     image: plugins/docker:17.10
-    registry: ci.presight.se:5000
-    repo: ci.presight.se:5000/partisk/web
+    #registry: ci.presight.se:5000
+    #repo: ci.presight.se:5000/partisk/web
     tag: ${DRONE_REPO_BRANCH}
     file: Dockerfile
     insecure: false
@@ -32,3 +32,9 @@ pipeline:
       image: plugins/slack
       channel: utveckling
       secrets: [ slack_webhook ]
+      template: >
+           {{#success build.status}}
+             build {{build.number}} succeeded. Good job.
+           {{else}}
+             build {{build.number}} failed. Fix me please.
+           {{/success}}
