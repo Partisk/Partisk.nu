@@ -30,4 +30,3 @@ pipeline:
     environment:
       - DOCKER_LAUNCH_DEBUG=true
     debug: true
-
