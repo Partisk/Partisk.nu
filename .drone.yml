@@ -28,7 +28,7 @@ pipeline:
     #  - DOCKER_LAUNCH_DEBUG=true
     #debug: true
 
-notify:
-    image: plugins/slack
-    channel: utveckling
-    secrets: [ slack_webhook ]
+  notify:
+      image: plugins/slack
+      channel: utveckling
+      secrets: [ slack_webhook ]
