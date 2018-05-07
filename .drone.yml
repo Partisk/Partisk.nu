@@ -21,7 +21,7 @@ pipeline:
     image: plugins/docker:17.10
     registry: ci.presight.se:5000
     repo: ci.presight.se:5000/partisk/web
-    tag: ${DRONE_REPO_BRANCH}
+    tag: ${DRONE_BUILD_NUMBER}
     file: Dockerfile
     insecure: false
     #environment:
@@ -34,9 +34,9 @@ pipeline:
       secrets: [ slack_webhook ]
       template: >
            {{#success build.status}}
-             build {{build.number}} succeeded. Good job.
+             build {{build.link}} succeeded. Good job.
            {{else}}
-             build {{build.number}} failed. Fix me please.
+             build {{build.link}} failed. Fix me please.
            {{/success}}
       when:
         status: [ success, failure ]
