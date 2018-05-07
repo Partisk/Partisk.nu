@@ -19,8 +19,8 @@ pipeline:
   publish:
     secrets: [docker_username, docker_password]
     image: plugins/docker:17.10
-    registry: ci.presight.se:5000
-    repo: ci.presight.se:5000/partisk/web/a$REGISTRY_URLb$$REGISTRY_URLc${REGISTRY_URL}d$${REGISTRY_URL}
+    registry: registry:5000
+    repo: registry:5000/partisk/web/a$REGISTRY_URLb$$REGISTRY_URLc${REGISTRY_URL}d$${REGISTRY_URL}
     #tag: ${REGISTRY_URL}/partisk/web
     file: Dockerfile
     insecure: false
