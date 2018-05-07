@@ -23,7 +23,7 @@ pipeline:
     #username: ${REGISTRY_USERNAME}
     #password: ${REGISTRY_PASSWORD}
     #email: ${REGISTRY_EMAIL}
-    repo: ci.presight.se:5000/partisk/web
+    repo: ci.presighadasdasdt.se:5000/partisk/web
     #tag: ${REGISTRY_URL}/partisk/web
     file: Dockerfile
     insecure: false
