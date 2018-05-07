@@ -17,16 +17,27 @@ pipeline:
       event: [push, pull_request]
 
   publish:
-    secrets: [docker_username, docker_password]
-    image: plugins/docker:17.05
-    registry: ${REGISTRY_URL}
+    #secrets: [docker_username, docker_password]
+    #image: plugins/docker:17.05
+    #registry: ${REGISTRY_URL}
     #username: ${REGISTRY_USERNAME}
     #password: ${REGISTRY_PASSWORD}
     #email: ${REGISTRY_EMAIL}
-    repo: ci.presight.se:5000/partisk/web
+    #repo: ci.presight.se:5000/partisk/web
     #tag: ${REGISTRY_URL}/partisk/web
-    file: Dockerfile
-    insecure: false
-    environment:
-      - DOCKER_LAUNCH_DEBUG=true
-    debug: true
+    #file: Dockerfile
+    #insecure: false
+    #environment:
+    #  - DOCKER_LAUNCH_DEBUG=true
+    #debug: true
+    image: docker
+    secrets: [docker_username,docker_password]
+    commands:
+        - docker login --username=${DOCKER_USERNAME} --password=${DOCKER_PASSWORD} ${REGISTRY_URL}
+        - docker build -t ${REGISTRY_URL}/partisk/web:master .
+        - docker push ${REGISTRY_URL}/partisk/web:master
+    volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+    when:
+        branch: master
+        status: success
