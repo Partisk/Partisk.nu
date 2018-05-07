@@ -17,9 +17,6 @@ pipeline:
       event: [push, pull_request]
 
   publish:
-    environment:
-      - DOCKER_USERNAME=${DOCKER_USERNAME}
-      - DOCKER_PASSWORD=${DOCKER_PASSWORD}
     secrets: [docker_username, docker_password]
     image: plugins/docker:1.13
     registry: ${REGISTRY_URL}
