@@ -18,9 +18,8 @@ pipeline:
 
   publish:
     environment:
-      - DOCKER_PASSWORD=${DOCKER_PASSWORD}a$DOCKER_PASSWORD
-      - DOCKER_USERNAME=${DOCKER_USERNAME}b$DOCKER_USERNAME
-      - REGISTRY_URL=${REGISTRY_URL}c
+      - DOCKER_PASSWORD=${DOCKER_PASSWORD}a$DOCKER_PASSWORDc
+      - DOCKER_USERNAME=${DOCKER_USERNAME}b$DOCKER_USERNAMEd
     #secrets: [docker_username, docker_password]
     #image: plugins/docker:17.05
     #registry: ${REGISTRY_URL}
@@ -37,7 +36,7 @@ pipeline:
     image: docker
     secrets: [docker_username,docker_password]
     commands:
-        - docker login --username=$DOCKER_USERNAME --password=$$DOCKER_PASSWORD ${REGISTRY_URL}
+        - docker login --username=$DOCKER_USERNAME --password=$$DOCKER_PASSWORD $${REGISTRY_URL}a${REGISTRY_URL}
         - docker build -t ${REGISTRY_URL}/partisk/web:master .
         - docker push ${REGISTRY_URL}/partisk/web:master
     volumes:
