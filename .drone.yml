@@ -5,11 +5,12 @@ pipeline:
       - DJANGO_SETTINGS_MODULE=app.settings.prod
       - DATABASE_USER=${PARTISK_DB_USER}
       - DATABASE_PASSWORD=${PARTISK_DB_PASSWORD}
-      - DATABASE_HOST=db
+      - DATABASE_HOST=mysql://mysql@localhost
       - SECRET_KEY=${SECRET_KEY}
       - ADMIN_ENABLED=False
       - COMPRESS=False
       - DEBUG=True
+      - DATABASE_URL=mysql://mysql@localhost
     commands:
     #  - . /env/.my-env
       - pip install --trusted-host pypi.python.org -r python_requirements.txt
@@ -41,4 +42,8 @@ pipeline:
            {{/success}}
       when:
         status: [ success, failure ]
-           
+services:
+  database:
+    image: mysql:5.7.22
+    environment:
+      - DATABASE_URL=mysql://mysql@localhost
