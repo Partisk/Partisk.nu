@@ -6,13 +6,12 @@ pipeline:
       - DATABASE_USER=${PARTISK_DB_USER}
       - DATABASE_PASSWORD=${PARTISK_DB_PASSWORD}
       - DATABASE_HOST=db
-      - SECRET_KEY=${DJANGO_SECRET}
+      - SECRET_KEY=${SECRET_KEY}
       - ADMIN_ENABLED=False
       - COMPRESS=False
       - DEBUG=True
     commands:
-      - ls /env/ -la
-      - . /env/.my-env
+    #  - . /env/.my-env
       - pip install --trusted-host pypi.python.org -r python_requirements.txt
       - python manage.py test
     volumes:
