@@ -5,18 +5,15 @@ pipeline:
       - DJANGO_SETTINGS_MODULE=app.settings.prod
       - DATABASE_USER=root
       - DATABASE_PASSWORD=partisktest
-      - DATABASE_HOST=mysql://mysql@localhost
-      - SECRET_KEY=${SECRET_KEY}
+      - DATABASE_HOST=localhost
+      - SECRET_KEY=verysecret
       - ADMIN_ENABLED=False
       - COMPRESS=False
       - DEBUG=True
-      - DATABASE_URL=mysql://mysql@localhost
+      - DATABASE_URL=localhost
     commands:
-      - . /env/.my-env
       - pip install --trusted-host pypi.python.org -r python_requirements.txt
       - python manage.py test
-    volumes:
-      - /app/presight-services:/env
     when:
       branch: [master, develop]
       event: [push, pull_request]
@@ -46,5 +43,5 @@ services:
   database:
     image: mysql:5.7.22
     environment:
-      - DATABASE_URL=mysql://mysql@localhost
+      - DATABASE_URL=root@localhost
       - MYSQL_ROOT_PASSWORD=partisktest
