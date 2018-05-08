@@ -1,20 +1,21 @@
 pipeline:
-  #build:
-  #  image: python:3.6
-  #  environment:
-  #    - DJANGO_SETTINGS_MODULE=app.settings.prod
-  #    - DATABASE_USER=${PARTISK_DB_USER}
-  #    - DATABASE_PASSWORD=${PARTISK_DB_PASSWORD}
-  #    - DATABASE_HOST=db
-  #    - SECRET_KEY=${DJANGO_SECRET}
-  #    - ADMIN_ENABLED=False
-  #    - COMPRESS=False
-  #    - DEBUG=True
-  #  commands:
-  #    - pip install --trusted-host pypi.python.org -r python_requirements.txt
-  #  when:
-  #    branch: [master]
-  #    event: [push, pull_request]
+  test:
+    image: python:3.6
+    environment:
+      - DJANGO_SETTINGS_MODULE=app.settings.prod
+      - DATABASE_USER=${PARTISK_DB_USER}
+      - DATABASE_PASSWORD=${PARTISK_DB_PASSWORD}
+      - DATABASE_HOST=db
+      - SECRET_KEY=${DJANGO_SECRET}
+      - ADMIN_ENABLED=False
+      - COMPRESS=False
+      - DEBUG=True
+    commands:
+      - pip install --trusted-host pypi.python.org -r python_requirements.txt
+      - python manage.py test
+    when:
+      branch: [master, develop]
+      event: [push, pull_request]
 
   publish:
     secrets: [docker_username, docker_password]
@@ -24,9 +25,6 @@ pipeline:
     tag: ${DRONE_BUILD_NUMBER}
     file: Dockerfile
     insecure: false
-    #environment:
-    #  - DOCKER_LAUNCH_DEBUG=true
-    #debug: true
 
   notify:
       image: plugins/slack
