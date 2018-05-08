@@ -11,6 +11,7 @@ pipeline:
       - COMPRESS=False
       - DEBUG=True
     commands:
+      - env
       - pip install --trusted-host pypi.python.org -r python_requirements.txt
       - python manage.py test
     when:
