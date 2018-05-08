@@ -1,0 +1,333 @@
+# Parties
+- model: partisk.party
+  pk: 1
+  fields: {name: "party 1", website: 'http://party1.com', twitter: party1,
+    color: '#f00', deleted: false, last_result_parliment: '10.00', last_result_eu: '15.30',
+    updated_by: null, created_date: '2018-01-05T17:19:24+00:00', updated_date: '2017-12-30T22:20:53+00:00',
+    description: 'description 1', short_name: P1, created_by: '1'}
+- model: partisk.party
+  pk: 2
+  fields: {name: "party 2", website: 'http://party2.com', twitter: party2,
+    color: '#0f0', deleted: false, last_result_parliment: '1.00', last_result_eu: '35.30',
+    updated_by: null, created_date: '2018-01-06T17:19:24+00:00', updated_date: '2017-12-30T22:20:53+00:00',
+    description: 'description 2', short_name: P1, created_by: '1'}
+- model: partisk.party
+  pk: 3
+  fields: {name: "party 3", website: 'http://party3.com', twitter: party3,
+    color: '#00f', deleted: false, last_result_parliment: '50.00', last_result_eu: '15.30',
+    updated_by: null, created_date: '2018-01-07T17:19:24+00:00', updated_date: '2017-12-30T22:20:53+00:00',
+    description: 'description 3', short_name: P1, created_by: '1'}
+- model: partisk.party
+  pk: 4
+  fields: {name: "party 4", website: 'http://party4.com', twitter: party4,
+    color: '#f0f', deleted: false, last_result_parliment: '12.89', last_result_eu: '25.30',
+    updated_by: null, created_date: '2018-01-08T17:19:24+00:00', updated_date: '2017-12-30T22:20:53+00:00',
+    description: 'description 4', short_name: P1, created_by: '1'}
+- model: partisk.party
+  pk: 5
+  fields: {name: "party 5", website: 'http://party5.com', twitter: party5,
+    color: '#f0f', deleted: false, last_result_parliment: '1.00', last_result_eu: '15.30',
+    updated_by: null, created_date: '2018-01-09T17:19:24+00:00', updated_date: '2017-12-30T22:20:53+00:00',
+    description: 'description 5', short_name: P1, created_by: '1'}
+- model: partisk.party
+  pk: 6
+  fields: {name: "party 6", website: 'http://party6.com', twitter: party6,
+    color: '#f0f', deleted: true, last_result_parliment: '1.9', last_result_eu: '5.30',
+    updated_by: null, created_date: '2018-01-10T17:19:24+00:00', updated_date: '2017-12-30T22:20:53+00:00',
+    description: 'description 6', short_name: P1, created_by: '1'}
+
+# Answer types
+- model: partisk.answertype
+  pk: '1'
+  fields: {answer: "no answer"}
+- model: partisk.answertype
+  pk: '2'
+  fields: {answer: yes}
+- model: partisk.answertype
+  pk: '3'
+  fields: {answer: no}
+
+# Source types
+- model: partisk.sourcetype
+  pk: 0
+  fields: {name: twitter}
+- model: partisk.sourcetype
+  pk: 1
+  fields: {name: website}
+
+# Sources
+- model: partisk.source
+  pk: 1
+  fields: {source_type: '0', name: 'party:1', content: party1twitter, last_updated: 2017-01-27}
+- model: partisk.source
+  pk: 2
+  fields: {source_type: '0', name: 'party:3', content: party3twitter, last_updated: 2018-01-27}
+- model: partisk.source
+  pk: 3
+  fields: {source_type: '1', name: 'party:2', content: 'webpage.com', last_updated: 2016-01-27}
+
+# Stuff
+- model: partisk.stuff
+  pk: 1
+  fields:
+    source_type: '0'
+    url: https://twitter.com/party1/status/862547580185698304
+    title: ''
+    content: "lol"
+    content_hash: null
+    date: '2018-05-11T05:59:03+00:00'
+    handled: true
+    parties: [1]
+    tags: []
+- model: partisk.stuff
+  pk: 2
+  fields:
+    source_type: '0'
+    url: https://twitter.com/party2/status/862547580185698304
+    title: ''
+    content: "lol2"
+    content_hash: null
+    date: '2017-05-11T05:59:03+00:00'
+    handled: false
+    parties: [2]
+    tags: [1,2]
+- model: partisk.stuff
+  pk: 3
+  fields:
+    source_type: '1'
+    url: https://website
+    title: 'Website'
+    content: "lol"
+    content_hash: null
+    date: '2016-05-11T05:59:03+00:00'
+    handled: false
+    parties: [2]
+    tags: []
+
+# Questions
+- model: partisk.question
+  pk: 1
+  fields: {title: Question 1, deleted: false, created_date: '2018-03-10T11:14:34+00:00',
+  description: 'description 1', approved: true, approved_date: '2014-01-23T22:22:20+00:00', 
+  done: true, version: null, created_by: '1'}
+- model: partisk.question
+  pk: 2
+  fields: {title: Question 2, deleted: false, created_date: '2014-03-10
+      11:14:34+00:00', description: 'description 2', approved: true, approved_date: '2014-01-23
+      22:22:20+00:00', done: true, version: null, created_by: '1'}
+- model: partisk.question
+  pk: 3
+  fields: {title: Question 3, deleted: true, created_date: '2015-03-10
+      11:14:34+00:00', description: 'description 3', approved: false, approved_date: '2014-01-23
+      22:22:20+00:00', done: true, version: null, created_by: '1'}
+- model: partisk.question
+  pk: 4
+  fields: {title: Question 4, deleted: true, created_date: '2016-03-10
+      11:14:34+00:00', description: 'description 4', approved: true, approved_date: '2014-01-23
+      22:22:20+00:00', done: true, version: null, created_by: '1'}
+- model: partisk.question
+  pk: 5
+  fields: {title: Question 5, deleted: false, created_date: '2017-03-10
+      11:14:34+00:00', description: 'description 5', approved: true, approved_date: '2014-01-23
+      22:22:20+00:00', done: false, version: null, created_by: '1'}
+
+# Tags
+- model: partisk.tag
+  pk: 1
+  fields: {name: "tag 1", deleted: false, created_date: '2017-12-30 22:20:56+00:00',
+    updated_date: '2017-12-30 22:20:56+00:00', is_category: false, created_by: '1',
+    updated_by: '1'}
+- model: partisk.tag
+  pk: 2
+  fields: {name: "tag 2", deleted: false, created_date: '2017-12-30 22:20:56+00:00',
+    updated_date: '2017-12-30 22:20:56+00:00', is_category: true, created_by: '1',
+    updated_by: '1'}
+- model: partisk.tag
+  pk: 3
+  fields: {name: "tag 3", deleted: true, created_date: '2017-12-30 22:20:56+00:00',
+    updated_date: '2017-12-30 22:20:56+00:00', is_category: false, created_by: '1',
+    updated_by: '1'}
+
+# Question tags
+- model: partisk.questiontags
+  pk: 1
+  fields: {question: 1, tag: 1}
+- model: partisk.questiontags
+  pk: 2
+  fields: {question: 1, tag: 2}
+- model: partisk.questiontags
+  pk: 3
+  fields: {question: 1, tag: 3}
+- model: partisk.questiontags
+  pk: 4
+  fields: {question: 1, tag: 2}
+- model: partisk.questiontags
+  pk: 5
+  fields: {question: 2, tag: 3}
+
+# Answers
+- model: partisk.answer
+  pk: 1
+  fields: {party: 1, answer_type: '1', question: 1, source: 'http://source1.test/asd',
+    date: '2013-09-15 00:00:00+00:00', deleted: false, created_date: '2018-03-10 11:14:39+00:00',
+    updated_date: '2013-12-04 13:04:30+00:00', description: 'description1', approved: true,
+    created_by: '1', stuff: '1', outdated: false}
+- model: partisk.answer
+  pk: 2
+  fields: {party: 1, answer_type: '1', question: 2, source: 'http://source2.test/asd',
+    date: '2013-09-15 00:00:00+00:00', deleted: false, created_date: '2018-03-10 11:14:39+00:00',
+    updated_date: '2013-12-04 13:04:30+00:00', description: 'description2', approved: true,
+    created_by: '1', stuff: null, outdated: false}
+- model: partisk.answer
+  pk: 3
+  fields: {party: 2, answer_type: '2', question: 1, source: 'http://source3.test/asd',
+    date: '2013-09-15 00:00:00+00:00', deleted: false, created_date: '2018-03-10 11:14:39+00:00',
+    updated_date: '2013-12-04 13:04:30+00:00', description: 'description3', approved: true,
+    created_by: '1', stuff: 1, outdated: false}
+- model: partisk.answer
+  pk: 4
+  fields: {party: 3, answer_type: '1', question: 3, source: 'http://source4.test/asd',
+    date: '2013-09-15 00:00:00+00:00', deleted: true, created_date: '2018-03-10 11:14:39+00:00',
+    updated_date: '2013-12-04 13:04:30+00:00', description: 'description4', approved: true,
+    created_by: '1', stuff: 3, outdated: false}
+- model: partisk.answer
+  pk: 5
+  fields: {party: 2, answer_type: '2', question: 3, source: 'http://source5.test/asd',
+    date: '2013-09-15 00:00:00+00:00', deleted: true, created_date: '2018-03-10 11:14:39+00:00',
+    updated_date: '2013-12-04 13:04:30+00:00', description: 'description4', approved: false,
+    created_by: '1', stuff: 2, outdated: false}
+- model: partisk.answer
+  pk: 6
+  fields: {party: 4, answer_type: '3', question: 3, source: 'http://source6.test/asd',
+    date: '2013-09-15 00:00:00+00:00', deleted: true, created_date: '2018-03-10 11:14:39+00:00',
+    updated_date: '2013-12-04 13:04:30+00:00', description: 'description4', approved: true,
+    created_by: '1', stuff: null, outdated: true}
+
+# Quiz
+- model: partisk.quiz
+  pk: 1
+  fields: {name: Quiz 1, description: "Quiz 1 description",
+    approved: true, date: '2014-01-26 22:11:23+00:00', created_date: '2013-12-10
+      20:02:54+00:00', updated_date: '2014-01-26 22:11:23+00:00', deleted: false,
+    approved_date: '2014-01-26 22:11:23+00:00', created_by: '1'}
+- model: partisk.quiz
+  pk: 2
+  fields: {name: Quiz 2, description: "Quiz 2 description",
+    approved: true, date: '2014-01-26 22:11:23+00:00', created_date: '2013-12-10
+      20:02:54+00:00', updated_date: '2014-01-26 22:11:23+00:00', deleted: false,
+    approved_date: '2014-01-26 22:11:23+00:00', created_by: '1'}
+- model: partisk.quiz
+  pk: 3
+  fields: {name: Quiz 3, description: "Quiz 3 description",
+    approved: false, date: '2014-01-26 22:11:23+00:00', created_date: '2013-12-10
+      20:02:54+00:00', updated_date: '2014-01-26 22:11:23+00:00', deleted: false,
+    approved_date: '2014-01-26 22:11:23+00:00', created_by: '1'}
+- model: partisk.quiz
+  pk: 4
+  fields: {name: Quiz 4, description: "Quiz 4 description",
+    approved: true, date: '2014-01-26 22:11:23+00:00', created_date: '2013-12-10
+      20:02:54+00:00', updated_date: '2014-01-26 22:11:23+00:00', deleted: true,
+    approved_date: '2014-01-26 22:11:23+00:00', created_by: '1'}
+
+# Question quizzes
+- model: partisk.questionquizzes
+  pk: 1
+  fields: {question: 1, quiz: 1}
+- model: partisk.questionquizzes
+  pk: 2
+  fields: {question: 2, quiz: 1}
+- model: partisk.questionquizzes
+  pk: 3
+  fields: {question: 3, quiz: 1}
+- model: partisk.questionquizzes
+  pk: 4
+  fields: {question: 1, quiz: 2}
+- model: partisk.questionquizzes
+  pk: 5
+  fields: {question: 4, quiz: 3}
+- model: partisk.questionquizzes
+  pk: 6
+  fields: {question: 4, quiz: 2}
+- model: partisk.questionquizzes
+  pk: 7
+  fields: {question: 3, quiz: 3}
+
+# Quiz results
+- model: partisk.quizresults
+  pk: 1
+  fields: {data: '{"3": {"points": 0, "answers": 13, "incorrect": 0, "correct": 1},
+      "10": {"points": 0, "answers": 9, "incorrect": 0, "correct": 0}, "5": {"points":
+      0, "answers": 10, "incorrect": 1, "correct": 0}, "8": {"points": 0, "answers":
+      5, "incorrect": 0, "correct": 0}, "9": {"points": 0, "answers": 13, "incorrect":
+      1, "correct": 0}, "2": {"points": 0, "answers": 11, "incorrect": 1, "correct":
+      0}, "1": {"points": 0, "answers": 13, "incorrect": 0, "correct": 1}, "7": {"points":
+      0, "answers": 12, "incorrect": 0, "correct": 1}, "6": {"points": 0, "answers":
+      11, "incorrect": 1, "correct": 0}, "4": {"points": 0, "answers": 4, "incorrect":
+      0, "correct": 0}}', created: 2017-12-30, version: 0, quiz: 1}
+- model: partisk.quizresults
+  pk: 2
+  fields: {data: '{"3": {"points": 0, "answers": 13, "incorrect": 0, "correct": 1},
+      "10": {"points": 0, "answers": 9, "incorrect": 0, "correct": 0}, "5": {"points":
+      0, "answers": 10, "incorrect": 1, "correct": 0}, "8": {"points": 0, "answers":
+      5, "incorrect": 0, "correct": 0}, "9": {"points": 0, "answers": 13, "incorrect":
+      1, "correct": 0}, "2": {"points": 0, "answers": 11, "incorrect": 1, "correct":
+      0}, "1": {"points": 0, "answers": 13, "incorrect": 0, "correct": 1}, "7": {"points":
+      0, "answers": 12, "incorrect": 0, "correct": 1}, "6": {"points": 0, "answers":
+      11, "incorrect": 1, "correct": 0}, "4": {"points": 0, "answers": 4, "incorrect":
+      0, "correct": 0}}', created: 2017-12-30, version: 0, quiz: 2}
+- model: partisk.quizresults
+  pk: 3
+  fields: {data: '{"3": {"points": 0, "answers": 13, "incorrect": 0, "correct": 1},
+      "10": {"points": 0, "answers": 9, "incorrect": 0, "correct": 0}, "5": {"points":
+      0, "answers": 10, "incorrect": 1, "correct": 0}, "8": {"points": 0, "answers":
+      5, "incorrect": 0, "correct": 0}, "9": {"points": 0, "answers": 13, "incorrect":
+      1, "correct": 0}, "2": {"points": 0, "answers": 11, "incorrect": 1, "correct":
+      0}, "1": {"points": 0, "answers": 13, "incorrect": 0, "correct": 1}, "7": {"points":
+      0, "answers": 12, "incorrect": 0, "correct": 1}, "6": {"points": 0, "answers":
+      11, "incorrect": 1, "correct": 0}, "4": {"points": 0, "answers": 4, "incorrect":
+      0, "correct": 0}}', created: 2017-12-30, version: 0, quiz: 3}
+- model: partisk.quizresults
+  pk: 4
+  fields: {data: '{"3": {"points": 0, "answers": 13, "incorrect": 0, "correct": 1},
+      "10": {"points": 0, "answers": 9, "incorrect": 0, "correct": 0}, "5": {"points":
+      0, "answers": 10, "incorrect": 1, "correct": 0}, "8": {"points": 0, "answers":
+      5, "incorrect": 0, "correct": 0}, "9": {"points": 0, "answers": 13, "incorrect":
+      1, "correct": 0}, "2": {"points": 0, "answers": 11, "incorrect": 1, "correct":
+      0}, "1": {"points": 0, "answers": 13, "incorrect": 0, "correct": 1}, "7": {"points":
+      0, "answers": 12, "incorrect": 0, "correct": 1}, "6": {"points": 0, "answers":
+      11, "incorrect": 1, "correct": 0}, "4": {"points": 0, "answers": 4, "incorrect":
+      0, "correct": 0}}', created: 2017-12-30, version: 0, quiz: 4}
+
+# Quiz results info
+- model: partisk.quizresultsinfo
+  pk: 1
+  fields: {quiz: 1, date: 2018-01-20, country: '', city: '', postal_code: '', coordinates: '',
+    accuracy: -1, subdivision: '', kommun: null, lan: null}
+- model: partisk.quizresultsinfo
+  pk: 2
+  fields: {quiz: 2, date: 2018-01-20, country: '', city: '', postal_code: '', coordinates: '',
+    accuracy: -1, subdivision: '', kommun: null, lan: null}
+- model: partisk.quizresultsinfo
+  pk: 3
+  fields: {quiz: 3, date: 2018-01-20, country: '', city: '', postal_code: '', coordinates: '',
+    accuracy: -1, subdivision: '', kommun: null, lan: null}
+
+# Quiz answers
+- model: partisk.quizanswer
+  pk: 1
+  fields: {question: 1, answer_type: '1', quiz_results_info: 1,
+    importance: 0}
+- model: partisk.quizanswer
+  pk: 2
+  fields: {question: 2, answer_type: '2', quiz_results_info: 1,
+    importance: 1}
+- model: partisk.quizanswer
+  pk: 3
+  fields: {question: 3, answer_type: '1', quiz_results_info: 1,
+    importance: 2}
+- model: partisk.quizanswer
+  pk: 4
+  fields: {question: 1, answer_type: '3', quiz_results_info: 2,
+    importance: 1}
+
+

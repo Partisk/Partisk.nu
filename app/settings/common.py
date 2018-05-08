@@ -129,3 +129,5 @@ COMPRESS_OUTPUT_DIR = '/'
 ADMIN_ENABLED = False
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+FIXTURE_DIRS = ('/partisk/fixtures/',)
