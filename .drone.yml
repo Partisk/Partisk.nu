@@ -5,13 +5,12 @@ pipeline:
       - DJANGO_SETTINGS_MODULE=app.settings.prod
       - DATABASE_USER=root
       - DATABASE_PASSWORD=partisktest
-      - DATABASE_HOST=127.0.0.1
+      - DATABASE_HOST=database
       - SECRET_KEY=verysecret
       - ADMIN_ENABLED=False
       - COMPRESS=False
       - DEBUG=True
     commands:
-      - env
       - pip install --trusted-host pypi.python.org -r python_requirements.txt
       - python manage.py test
     when:
