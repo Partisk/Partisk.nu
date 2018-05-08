@@ -1,4 +1,5 @@
 # Partisk
+![test](http://ci.presight.se/api/badges/Partisk/Partisk.nu/status.svg?branch=master)
 ## Install
 * Install python3, pip, django2, memcached (optional) and mysql/mariadb
 * sudo apt-get install libmariadbclient-dev (mariadb) or sudo apt-get install libmysqlclient-dev (mysql)
