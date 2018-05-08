@@ -11,8 +11,11 @@ pipeline:
       - COMPRESS=False
       - DEBUG=True
     commands:
+      - source /env/.my-env
       - pip install --trusted-host pypi.python.org -r python_requirements.txt
       - python manage.py test
+    volumes:
+      - /app/presight-services:/env
     when:
       branch: [master, develop]
       event: [push, pull_request]
