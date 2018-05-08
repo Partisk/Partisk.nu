@@ -12,7 +12,8 @@ pipeline:
       - DEBUG=True
     commands:
       - pip install --trusted-host pypi.python.org -r python_requirements.txt
-      - cd partisk.nu
+      - ls
+      - cd Partisk.nu
       - python manage.py test
       - cd ..
     when:
