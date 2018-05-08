@@ -1,9 +1,0 @@
- build:
-   image: docker:stable
-   services:
-   - docker:dind
-   stage: build
-   script:
-     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN ci.presight.se
-     - docker build -t ci.presight.se/root/partisk.nu/partisk_web:latest .
-     - docker push ci.presight.se/root/partisk.nu/partisk_web:latest
