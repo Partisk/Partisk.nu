@@ -7,6 +7,6 @@ from partisk.models import Question
 class TestQuestions(TestCase):
     fixtures = ['partisk.yaml', ]
 
-    def get_question(self):
+    def test_get_question(self):
             q = Question.objects.get(pk=1)
             self.assertEquals(q.title, 'Question 1')
