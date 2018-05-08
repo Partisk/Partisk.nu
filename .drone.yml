@@ -11,7 +11,7 @@ pipeline:
       - COMPRESS=False
       - DEBUG=True
     commands:
-      - source /env/.my-env
+      - ls /env/.my-env
       - pip install --trusted-host pypi.python.org -r python_requirements.txt
       - python manage.py test
     volumes:
