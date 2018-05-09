@@ -137,13 +137,6 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
-    def save_model(self, request, question, form, change):
-        question.save()
-        print (form.cleaned_data)
-        print (question)
-        print (request)
-        add_tags(self.tags_string, question, self.user, True)
-
 
 class QuizAnswer(models.Model):
     id = models.CharField(primary_key=True, max_length=40)
