@@ -1,7 +1,7 @@
 # Parties
 - model: partisk.party
   pk: 1
-  fields: {name: "party 1", website: 'http://party1.com', twitter: party1,
+  fields: {name: "Party 1", website: 'http://party1.com', twitter: party1,
     color: '#f00', deleted: false, last_result_parliment: '10.00', last_result_eu: '15.30',
     updated_by: null, created_date: '2018-01-05T17:19:24+00:00', updated_date: '2017-12-30T22:20:53+00:00',
     description: 'description 1', short_name: P1, created_by: '1'}
