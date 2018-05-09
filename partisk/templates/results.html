@@ -20,11 +20,20 @@
 </div>
 {{ created|date:'Y/m/d' }}
 {{ quiz.name }}
+
+<div id="quiz-disclaimer">
+    <p>
+        Resultatet ger inte en realistisk bild av verkligheten och visar inte nödvändigtvis vad du borde rösta på.
+        Datan är inte komplett och tar inte hänsyn till viktiga parametrar som partiernas förtroende, huvudfrågor eller företrädare.
+        Använd resultatet som ett tankeexperiment för att och bilda en egen uppfattning.
+    </p>
+</div>
+
 <table>
-{% for party_id, party_result in result.items %}
-<tr>
-<td>{{party_id}} {{party_result.correct}}/{{party_result.answers}}</td>
-</tr>
+    {% for party_id, party_result in result.items %}
+    <tr>
+        <td>{{party_id}} {{party_result.correct}}/{{party_result.answers}}</td>
+    </tr>
 {% endfor %}
 </table>
 
