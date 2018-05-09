@@ -38,6 +38,7 @@ pipeline:
            {{/success}}
       when:
         status: [ success, failure ]
+
 services:
   database:
     image: mysql:5.7.22
