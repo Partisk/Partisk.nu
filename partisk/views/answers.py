@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import cache_page
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic.detail import DetailView
 
 from partisk.models import Question, Answer, Party, from_slug, AnswerType
 from partisk.utils import get_questions_params, get_answers_params, get_user
@@ -76,20 +75,6 @@ def delete_answer(request, answer_id):
     messages.success(request, 'Answer deleted')
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-
-#@login_required
-#@permission_required('partisk.edit_answer')
-#@csrf_protect
-#def approve_answer(request, answer_id):
-#    answer = get_object_or_404(Answer, id=answer_id)
-
-#    answer.approved = True
-#    answer.save()
-
-#    messages.success(request, 'Answer approved')
-
-#    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @cache_page(VIEW_CACHE_TIME)
