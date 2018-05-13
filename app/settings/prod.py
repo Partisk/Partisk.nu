@@ -50,3 +50,5 @@ DATABASES = {
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 ADMIN_ENABLED = os.environ.get('ADMIN_ENABLED') == 'True'
+print("BLAAAAA")
+print(os.environ.get('ADMIN_ENABLED'))
