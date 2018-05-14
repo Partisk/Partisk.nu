@@ -8,7 +8,7 @@ def merge_two_dicts(x, y):
     return z
 
 
-def add_tags(tags_string, question, user, clean=False):
+def add_tags(tags_string, question, user=None, clean=False):
     if clean:
         QuestionTags.objects.filter(question_id=question.id).delete()
 
@@ -18,7 +18,7 @@ def add_tags(tags_string, question, user, clean=False):
         tag, created = Tag.objects.get_or_create(
             name=name,
             defaults={
-                'created_by': user.id,
+                'created_by': user.id if user else None,
                 'updated_by': None,
                 'deleted': False,
                 'is_category': False
