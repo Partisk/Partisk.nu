@@ -122,8 +122,7 @@ class Question(models.Model):
     done = models.BooleanField(default=False)
     version = models.IntegerField(blank=True, null=True)
     tags = models.ManyToManyField('Tag', through='QuestionTags', blank=True)
-
-    created_by = models.IntegerField(default=None, null=True)
+    created_by = models.IntegerField(default=None, null=True, blank=True)
 
     def _get_slug(self):
         return get_slug(self, self.title)
