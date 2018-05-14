@@ -25,8 +25,8 @@ def add_question(request):
     question_form = QuestionModelForm(request.POST)
     question = question_form.save()
 
-    add_tags(request, question)
-
+    add_tags(request.POST['tags'], question, None, True)
+    
     messages.success(request, 'Question "%s" added' % request.POST['title'])
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -44,7 +44,7 @@ def edit_question(request, question_id):
     question_form = QuestionModelForm(request.POST, instance=question)
     question = question_form.save()
 
-    add_tags(request, question, True)
+    add_tags(request.POST['tags'], question, None, True)
 
     messages.success(request, 'Question "%s" updated' % request.POST['title'])
 
