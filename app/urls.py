@@ -19,10 +19,10 @@ from partisk.views import graph_image
 from partisk.views import login, logout
 from partisk.views import test
 
-handler404 = 'partisk.views.error'
-handler500 = 'partisk.views.error'
-handler403 = 'partisk.views.error'
-handler400 = 'partisk.views.error'
+handler404 = 'partisk.views.error404'
+handler500 = 'partisk.views.error500'
+handler403 = 'partisk.views.error403'
+handler400 = 'partisk.views.error400'
 
 urlpatterns = [
     url(r'^$', index, name='index'),

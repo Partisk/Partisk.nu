@@ -30,8 +30,20 @@ def get_item(dictionary, key):
     return dictionary.get(key)
 
 
-def error(request):
-    return render(request, 'error.html')
+def error404(request):
+    return render(request, 'error.html', status=404)
+
+
+def error500(request):
+    return render(request, 'error.html', status=500)
+
+
+def error403(request):
+    return render(request, 'error.html', status=403)
+
+
+def error400(request):
+    return render(request, 'error.html', status=400)
 
 
 def get_social_data(title, description, image=None):
