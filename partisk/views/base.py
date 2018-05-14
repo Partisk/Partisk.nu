@@ -30,6 +30,10 @@ def get_item(dictionary, key):
     return dictionary.get(key)
 
 
+def error(request):
+    return render(request, 'error.html')
+
+
 def get_social_data(title, description, image=None):
     data = {
         'title': title,

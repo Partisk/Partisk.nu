@@ -19,6 +19,11 @@ from partisk.views import graph_image
 from partisk.views import login, logout
 from partisk.views import test
 
+handler404 = 'partisk.views.error'
+handler500 = 'partisk.views.error'
+handler403 = 'partisk.views.error'
+handler400 = 'partisk.views.error'
+
 urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^frågor/$', questions, name='questions'),

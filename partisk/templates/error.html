@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block breadcrumbs %} {{block.super}}
+    <span class="divider">&gt;</span>
+    <span class="breadcrumb">Fel</span>
+{% endblock %}
+{% block title %}Någonting gick fel{% endblock %}
+{% block content %}
+<div class="row">
+    <h1>Hoppsan!</h1>
+    <p>Vi verkar inte kunna hitta sidan du letar efter.</p>
+</div>
+{% endblock %}
