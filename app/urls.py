@@ -47,9 +47,6 @@ urlpatterns = [
     url(r'^logout/$', logout, name='logout'),
 ]
 
-print("SETTINGS ADMIN ENABLED")
-print(settings.ADMIN_ENABLED)
-print(settings)
 if settings.ADMIN_ENABLED:
     urlpatterns += [
         url(r'^admin/question/add', add_question, name='add_question'),
