@@ -12,7 +12,7 @@ pipeline:
       - DEBUG=True
     commands:
       - pip install --trusted-host pypi.python.org -r python_requirements.txt
-      - python manage.py test
+      - python makemigrations && python migrate && python manage.py test
     when:
       branch: [master, develop]
       event: [push, pull_request]
