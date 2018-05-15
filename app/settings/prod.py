@@ -50,3 +50,7 @@ DATABASES = {
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 ADMIN_ENABLED = os.environ.get('ADMIN_ENABLED') == 'True'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+ANALYTICS_SITE_ID = 1

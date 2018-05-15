@@ -51,6 +51,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.static',
                 'django.template.context_processors.debug',
+                'partisk.context_processors.global_settings',
             ],
         },
     },
