@@ -1,0 +1,27 @@
+iframe {
+    width: 100%;
+}
+
+.handle .col-12 .row {
+    display: flex;
+}
+
+.handle .col-12 .row .col-6 {
+    display: flex;
+}
+
+form {
+    width: 100%;
+}
+
+#collapseQuestion {
+    width: 100%;
+}
+
+.source-content {
+    word-break: break-word;
+}
+
+.handled {
+    text-decoration: line-through;
+}

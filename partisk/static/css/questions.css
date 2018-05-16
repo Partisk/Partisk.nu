@@ -1,0 +1,24 @@
+.tag-list {
+    list-style: none;
+    padding: 0;
+}
+
+.tag-list li {
+    display: inline-block;
+    background-color: #454a57;
+    border-radius: 4px;
+    padding: 4px 6px;
+    margin-right: 8px;
+}
+
+.tag-list a {
+    color: #abb2c3;
+    font-size: 0.8em;
+}
+
+.autocomplete-suggestions {
+    border: 1px solid #999;
+    background-color: #454a57;
+    overflow: auto;
+    color:#abb2c3;
+}
