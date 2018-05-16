@@ -109,3 +109,4 @@ venv.bak/
 app/settings/dev.py
 app/settings/external.py
 app/build
+static/

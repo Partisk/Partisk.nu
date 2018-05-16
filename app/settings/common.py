@@ -1,7 +1,7 @@
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -23,7 +23,10 @@ INSTALLED_APPS = [
     "cookielaw",
     'crispy_forms',
     'django_markdown2',
+    'sass_processor',
 ]
+
+
 
 MIDDLEWARE = [
     'pipeline.middleware.MinifyHTMLMiddleware',
@@ -94,20 +97,22 @@ USE_TZ = True
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+COMPRESS_STORAGE = STATICFILES_STORAGE
 
 # Look for static files
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "partisk", "static"),
 ]
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
+    'sass_processor.finders.CssFinder',
 )
 
 # Where to put collected files
-STATIC_ROOT = os.path.join(BASE_DIR, 'build/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'build')
 
 # Path to be used to access static files
 STATIC_URL = '/static/'
@@ -115,7 +120,7 @@ STATIC_URL = '/static/'
 PIPELINE = {}
 
 COMPRESS_URL = '/static/'
-COMPRESS_ROOT = STATIC_ROOT
+COMPRESS_ROOT = os.path.join(BASE_DIR, 'static', 'compressed')
 
 GENERATED_IMG_PATH = STATIC_ROOT + 'images/quiz/'
 
@@ -132,3 +137,8 @@ ADMIN_ENABLED = False
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 FIXTURE_DIRS = ('/partisk/fixtures/',)
+
+SASS_PROCESSOR_INCLUDE_FILE_PATTERN = r'^.+\.scss$'
+SASS_PROCESSOR_ROOT = STATIC_ROOT
+
+ANALYTICS_SITE_ID = 2

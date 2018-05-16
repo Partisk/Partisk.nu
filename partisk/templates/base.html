@@ -1,29 +1,17 @@
 {% load compress %}
 {% load static %}
+{% load sass_tags %}
 {% load cookielaw_tags %}
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta name="referrer" content="no-referrer">
-    <script type="text/javascript">
-        var _paq = _paq || [];
-        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function() {
-            var u="//analytics.partisk.nu/";
-            _paq.push(['setTrackerUrl', u+'piwik.php']);
-            _paq.push(['setSiteId', '{{ ANALYTICS_SITE_ID }}']);
-            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-        })();
-    </script>
     <style type="text/css">.party-logo,.party-logo-small{background: url('{% static 'images/partisk-sprite.png' %}')}</style>
+
     {% compress css inline %}
-        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/simple-grid.min.css" media="screen,projection" />
-        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/style.css" media="screen,projection" />
-        <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="{% sass_src 'sass/main.scss' %}" />
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.min.css" />
     {% endcompress %}
 
     {% if "/admin/" in request.path %}
@@ -68,7 +56,7 @@
                             <li{% if "/kontakt/" in request.path %} class="active"{% endif %}><a href='{% url 'contact' %}'>
                                 <i class="fa fa-info-circle"></i>Kontakt</a>
                             </li>
-                            {% if request.user.is_authenticated %}
+                            {% if request.user.is_authenticated and settings.ADMIN_ENABLED %}
                             <li{% if "/admin/" in request.path %} class="active"{% endif %}><a href='{% url 'admin' %}'>
                                 <i class="fa fa-cogs" aria-hidden="true"></i>Admin</a>
                             </li>
@@ -177,8 +165,26 @@
         </div>
 
     </footer>
+    <script type="text/javascript">
+        var analyticsSiteId={{ ANALYTICS_SITE_ID }};
+    </script>
     {% compress js inline %}
         <script type="text/javascript" src="{{ STATIC_URL }}js/fontfaceobserver.standalone.js" defer></script>
+    {% endcompress %}
+    {% compress js inline %}
+        <script type="text/javascript" defer>
+            var _paq = _paq || [];
+            /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            (function() {
+                var u="https://analytics.partisk.nu/";
+                _paq.push(['setTrackerUrl', u+'piwik.php']);
+                _paq.push(['setSiteId', analyticsSiteId]);
+                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+            })();
+        </script>
     {% endcompress %}
     {% compress js file partisk %}
         <script defer>

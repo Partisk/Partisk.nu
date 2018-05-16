@@ -1,7 +1,6 @@
 import os
 from app.settings.common import *
 
-
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 MIDDLEWARE = [
@@ -19,6 +18,7 @@ MIDDLEWARE = [
 
 DEBUG = os.environ.get('DEBUG') == 'True'
 COMPRESS_ENABLED = os.environ.get('COMPRESS') == 'True'
+COMPRESS_OFFLINE = os.environ.get('COMPRESS') == 'True'
 
 VIEW_CACHE_TIME = 0
 CACHE_MIDDLEWARE_SECONDS = VIEW_CACHE_TIME
@@ -51,6 +51,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 ADMIN_ENABLED = os.environ.get('ADMIN_ENABLED') == 'True'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 ANALYTICS_SITE_ID = 1
+
+SASS_OUTPUT_STYLE = 'compact'
